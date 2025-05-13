@@ -4,7 +4,7 @@ public class Movie {
     private int releaseYear;
     private Director director;
     private Customer[] customers;
-
+    private boolean isRented;
 
     /**
      * Constructor for the Movie class.
@@ -20,8 +20,9 @@ public class Movie {
         this.name = name;
         this.genre = genre;
         this.releaseYear = releaseYear;
-        this.director = director;
+        this.director = new Director(director);
         this.customers = new Customer[0];
+        this.isRented = false;
     }
 
 
@@ -48,5 +49,27 @@ public class Movie {
     public void printMovie() {
         System.out.println("Title:" + this.name + ", Genre:" + this.genre + ", Year:" + this.releaseYear
                 + ", Director:" + getDirectorName());
+    }
+
+    /**
+     * <p>Checks if details of one movie equals to the details of the current movie</p>
+     * <p><b>Note: 2 movies are the same if they have the same name, release year and director
+     * </b></p>
+     * @param name name of a movie
+     * @param releaseYear release year of a movie
+     * @param director director of a movie
+     * @return true if the movies are the same, otherwise false
+     * */
+    public boolean isEquals( String name, int releaseYear, Director director){
+        return this.name.equals(name) && this.releaseYear == releaseYear &&
+                this.director.isEquals(director);
+    }
+
+    /**
+     * <p>Checks if the movie is rented</p>
+     * @return true if the movie is rented, otherwise false
+     * */
+    public boolean isRented(){
+        return this.isRented;
     }
 }

@@ -1,5 +1,6 @@
 /** Represents a customer with a name and an ID. */
 public class Customer {
+
     private String name;
     private String id;
     static final int maxMovies= 5;

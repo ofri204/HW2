@@ -9,8 +9,19 @@ public class Director {
         this.movies = new Movie[0];
     }
 
+    public Director( Director director){
+        this(director.name, director.biography);
+    }
+
     public String getName() {
         return this.name;
     }
 
+    /**<p>Checks if a director is identical to the current</p>
+     * <p><b>Note: 2 directors are identical if they have the same name</b></p>
+     * @param director a director
+     * @return true if the directors are identical, otherwise false*/
+    public boolean isEquals( Director director ){
+        return this.name.equals(director.getName());
+    }
 }
