@@ -3,7 +3,7 @@ public class DataSet {
     private String[] data;
     private int size;
     private int activeItems;
-    private int addItemNotGenericError = -1;
+    private final int ERROR = -1;
 
     public DataSet( int size ){
         this.size = size;
@@ -37,7 +37,7 @@ public class DataSet {
         this.size++;
         String[] newDataSet = new String[this.size];
 
-        for( int i=0; i< this.size-1; i++ ){
+        for( int i=0; i < this.size-1; i++ ){
             newDataSet[i] = data[i];
         }
 
@@ -47,7 +47,7 @@ public class DataSet {
     public int notGenericAddItem( String item ){
 
         if( isFull() ){
-            return addItemNotGenericError;
+            return ERROR;
         }
 
         this.data [ activeItems ] = new String( item );
@@ -56,5 +56,35 @@ public class DataSet {
         return 0;
     }
 
+    public int removeItemByData( String item ){
 
+        int itemIndex = findItemByName( item );
+
+        if( itemIndex == ERROR){
+            return ERROR;
+        }
+
+        data[itemIndex] = null;
+        moveSetBackward( itemIndex );
+
+        return 0;
+    }
+
+    private int findItemByName( String item ){
+
+        for( int i = 0; i < this.size; i++){
+            if( data[i].equals(item) ){
+                return i;
+            }
+        }
+        return ERROR;
+    }
+
+    private void moveSetBackward( int startMovePosition ){
+        int i = startMovePosition;
+        while( i+1 < this.size ){
+            data[ i+1 ] = data[i];
+            i++;
+        }
+    }
 }
