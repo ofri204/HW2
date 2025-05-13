@@ -1,6 +1,5 @@
 package Director;
 import DataSet.DataSet;
-import Movie.Movie;
 
 public class Director {
     private String name ;
