@@ -1,4 +1,5 @@
 package Movie;
+import Customer.Customer;
 import Director.Director;
 import EnumGenre.EnumGenre;
 import DataSet.DataSet;
@@ -8,7 +9,7 @@ public class Movie {
     private EnumGenre genre;
     private int releaseYear;
     private Director director;
-    private DataSet[] customers;
+    private Customer[] customers;
 
 
     /**
@@ -26,7 +27,7 @@ public class Movie {
         this.genre = genre;
         this.releaseYear = releaseYear;
         this.director = director;
-        this.customers = new DataSet[0];
+        this.customers = new Customer[0];
     }
 
 

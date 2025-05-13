@@ -24,9 +24,7 @@ public class DataSet {
      * Checks if {@code data} is empty
      * @return 1 if {@code data} is empty, otherwise 0
      */
-    public boolean isEmpty(){
-        return activeItems == 0;
-    }
+    public boolean isEmpty(){ return activeItems == 0; }
 
     /**
      * Checks if {@code data} is full
@@ -38,12 +36,18 @@ public class DataSet {
     }
 
     /**
-
+     Prints item from {@code data}
+     @param index the index of item for displaying from {@code data}
      */
     public void printItemByIndex( int index ){
         System.out.print( this.data[index] );
     }
 
+    /**
+     * Adds items generically to {@code data}
+     * <p>Note: The current function increase the length of {@code data}</p>
+     * @param item new item for adding to {@code data}
+     */
     public void genericAddItem( String item ){
 
         if( isFull() ){
@@ -54,6 +58,9 @@ public class DataSet {
         activeItems++;
     }
 
+    /**
+     * Expanding {@code data} by 1 unit
+     */
     private void broadDataSet(){
 
         this.size++;
@@ -66,6 +73,14 @@ public class DataSet {
         data = newDataSet;
     }
 
+    /**
+     * Adds items to {@code data}
+     * <p>Note 1: the function isn't generic.</p>
+     * <p>Note 2: if {@code data} is full, the function won't add the new item</p>
+     *
+     * @param item new item for adding to {@code data}
+     * @return 0 if the item added, otherwise {@code ERROR}
+     */
     public int notGenericAddItem( String item ){
 
         if( isFull() ){

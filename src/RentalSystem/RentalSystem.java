@@ -5,11 +5,5 @@ import Movie.Movie;
 import Director.Director;
 
 public class RentalSystem {
-    private DataSet movies;
-    private DataSet customers;
-
-
 
 }
-
-
