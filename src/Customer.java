@@ -1,13 +1,9 @@
-package Customer;
-import DataSet.DataSet;
-
-
 /** Represents a customer with a name and an ID. */
 public class Customer {
     private String name;
     private String id;
     static final int maxMovies= 5;
-    private DataSet[] movies;
+    private Customer[] movies;
 
 
     /**
@@ -19,7 +15,7 @@ public class Customer {
     public Customer(String name, String id) {
         this.name = name;
         this.id = id;
-        this.movies = new DataSet[maxMovies];
+        this.movies = new Customer[maxMovies];
     }
 
     /**

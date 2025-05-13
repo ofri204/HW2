@@ -1,5 +1,3 @@
-package EnumGenre;
-
 public enum EnumGenre {
     Action,
     ScienceFiction,

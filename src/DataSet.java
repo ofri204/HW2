@@ -1,5 +1,3 @@
-package DataSet;
-
 public class DataSet {
 
     /** array of information*/

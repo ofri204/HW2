@@ -1,7 +1,3 @@
-package Director;
-import Movie.Movie;
-
-
 public class Director {
     private String name ;
     private String biography;

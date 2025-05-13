@@ -1,9 +1,3 @@
-package Movie;
-import Customer.Customer;
-import Director.Director;
-import EnumGenre.EnumGenre;
-import DataSet.DataSet;
-
 public class Movie {
     private String name;
     private EnumGenre genre;
