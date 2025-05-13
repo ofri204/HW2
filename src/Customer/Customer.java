@@ -1,4 +1,4 @@
-package Costumer;
+package Customer;
 import DataSet.DataSet;
 
 

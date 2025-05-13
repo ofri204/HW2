@@ -8,7 +8,7 @@ public class Movie {
     private EnumGenre genre;
     private int releaseYear;
     private Director director;
-    private DataSet[] costumers;
+    private DataSet[] customers;
 
 
     /**
@@ -26,7 +26,7 @@ public class Movie {
         this.genre = genre;
         this.releaseYear = releaseYear;
         this.director = director;
-        this.costumers = new DataSet[0];
+        this.customers = new DataSet[0];
     }
 
 
