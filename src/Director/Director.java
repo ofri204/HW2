@@ -1,15 +1,15 @@
 package Director;
-import DataSet.DataSet;
+import Movie.Movie;
 
 public class Director {
     private String name ;
     private String biography;
-    private DataSet[] movies;
+    private Movie[] movies;
 
     public Director(String name, String biography) {
         this.name = name;
         this.biography = biography;
-        this.movies = new DataSet[0];
+        this.movies = new Movie[0];
     }
 
     public String getName() {
