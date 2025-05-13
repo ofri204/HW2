@@ -16,14 +16,27 @@ public class Movie {
         this.director = director;
     }
 
+
+    /**
+     * Returns the release year of the movie.
+     *
+     * @return the year the movie was released
+     */
     public int getReleaseYear() {
         return this.releaseYear;
     }
 
+    /**
+     * Returns the name of the movie's director.
+     *
+     * @return the director's name
+     */
     public String getDirectorName() {
         return this.director.getName();
     }
 
+
+    /** Prints the movie's details, including title, genre, release year, and director **/
     public void printMovie() {
         System.out.println("Title:" + this.name + ", Genre:" + this.genre + ", Year:" + this.releaseYear
                 + ", Director:" + getDirectorName());
