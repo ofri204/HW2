@@ -7,7 +7,7 @@ public class Customer {
     private String name;
     private String id;
     static final int maxMovies= 5;
-    private DataSet movies;
+    private DataSet[] movies;
 
 
     /**
@@ -19,6 +19,7 @@ public class Customer {
     public Customer(String name, String id) {
         this.name = name;
         this.id = id;
+        this.movies = new DataSet[maxMovies];
     }
 
     /**
@@ -29,7 +30,6 @@ public class Customer {
     public String GetName() {
         return name;
     }
-
 
     /**
      * Returns the ID of the customer.

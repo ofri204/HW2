@@ -1,19 +1,32 @@
 package Movie;
 import Director.Director;
 import EnumGenre.EnumGenre;
+import DataSet.DataSet;
 
 public class Movie {
     private String name;
     private EnumGenre genre;
     private int releaseYear;
     private Director director;
-    static final int maxMovies =5;
+    private DataSet[] costumers;
 
+
+    /**
+     * Constructor for the Movie class.
+     * Initializes the movie with a name, genre, release year, and director.
+     * Also initializes the costumers array as an empty DataSet array.
+     *
+     * @param name the name of the movie
+     * @param genre the genre of the movie
+     * @param releaseYear the year the movie was released
+     * @param director the director of the movie
+     */
     public Movie(String name, EnumGenre genre, int releaseYear, Director director) {
         this.name = name;
         this.genre = genre;
         this.releaseYear = releaseYear;
         this.director = director;
+        this.costumers = new DataSet[0];
     }
 
 
