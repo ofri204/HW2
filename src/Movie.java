@@ -72,4 +72,13 @@ public class Movie {
     public boolean isRented(){
         return this.isRented;
     }
+
+    /**
+     * <p>Changes the rent movie status</p>
+     * <p><b>Note: if movie is rented, it is changed to be unrented, and if the movie is
+     * unrented, it is changed to be rented</b></p>
+     * */
+    public void changeMovieRentedStatus(){
+        this.isRented = !this.isRented;
+    }
 }
