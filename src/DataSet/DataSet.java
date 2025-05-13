@@ -1,3 +1,5 @@
+package DataSet;
+
 public class DataSet {
 
     private String[] data;

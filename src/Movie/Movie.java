@@ -7,7 +7,7 @@ public class Movie {
     private EnumGenre genre;
     private int releaseYear;
     private Director director;
-
+    static final int maxMovies =5;
 
     public Movie(String name, EnumGenre genre, int releaseYear, Director director) {
         this.name = name;
