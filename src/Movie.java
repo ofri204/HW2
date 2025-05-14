@@ -66,8 +66,7 @@ public class Movie {
     }
 
     public boolean isEquals( Movie movie ){
-        return this.name.equals(movie.name) && this.releaseYear == movie.releaseYear &&
-                this.director.isEquals(movie.director);
+        return this.equals( movie );
     }
     /**
      * <p>Checks if the movie is rented</p>
