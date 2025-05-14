@@ -37,6 +37,13 @@ public class Customer {
         return id;
     }
 
+    /**
+     * <p><u>Purpose: Checks if a customer is identical to this customer</u></p>
+     * @param customer a customer
+     * @return true if the customer are identical, otherwise false*/
+    public boolean isEquals( Customer customer ){
+        return this.equals( customer );
+    }
 }
 
 

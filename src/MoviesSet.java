@@ -1,7 +1,6 @@
 public class MoviesSet {
 
-    /** empty string for biography of directors*/
-    private static final String emptyBiography = "";
+
     /**<p>Different System Errors</p>*/
     private static final int movieIsFullError = -1;
     private static final int movieIsExistingError = -2;
@@ -16,12 +15,17 @@ public class MoviesSet {
      * isn't null, if {@code activeMovies} > 0. </b>*/
     private int activeMovies;
 
+    /**Specifies if {@code movies} will not be expanded*/
+    private boolean isFinalSize;
+
     /**<p>Main builder of MoviesSet Class</p>
-     * @param size length of {@code movies} */
-    public MoviesSet(int size){
+     * @param size length of {@code movies}
+     * @param isFinalSize defines if the length of {@code movies} is final*/
+    public MoviesSet(int size, boolean isFinalSize){
         this.size = size;
         this.activeMovies = 0;
         this.movies = new Movie[this.size];
+        this.isFinalSize = isFinalSize;
     }
 
     /**
@@ -70,9 +74,10 @@ public class MoviesSet {
 
     /**
      *<p><u>Purpose: Add new movie to {@code movies}</u></p>
-     * <p><b>Note: if the new movie is existing in {@code movies} or there is no space for it in
+     * <p><b>Note 1: if the new movie is existing in {@code movies} or there is no space for it in
      * {@code movies}, the new movie won't be added</b></p>
-     * <p><b>Used functions: {@link #isFull()}, {@link #isMovieExisting(Movie)}, 
+     * <p><b>Note 2: if {@code isFinalSize} is false, {@code movies} will be expanded</b></p>
+     * <p><b>Used functions: {@link #isFull()}, {@link #isMovieExisting(Movie)},
      * {@link #movieAdder(Movie)}</b></p>
      *
      * @param movie a new movie
@@ -80,7 +85,7 @@ public class MoviesSet {
      *          <p>{@code movieIsExistingError} if the movie is existing in {@code movies}</p>
      *          <p>otherwise, it returns {@code functionCompletedSuccessfully}</p>*/
     private int addNewMovie(Movie movie){
-        if ( isFull() ){
+        if ( isFull() && this.isFinalSize){
             return movieIsFullError;
         } else if( isMovieExisting( movie )){
             return movieIsExistingError;
@@ -97,8 +102,25 @@ public class MoviesSet {
      * @param movie a movie to add
      * */
     private void movieAdder(Movie movie){
+
+        if( this.activeMovies == this.size){
+            expandMoviesArr();
+        }
         this.movies[activeMovies] = movie;
         activeMovies++;
+    }
+
+    /**
+     * <p><u>Purpose: expands {@code customers} by 1 unit</u></p>
+     * <p><b>This is sub-function of {@link #movieAdder(Movie)}</b></p>
+     * */
+    private void expandMoviesArr(){
+        this.size++;
+        Movie[] newArr = new Movie[size];
+        for(int i = 0; i < size - 1; i++){
+            newArr[i] = this.movies[i];
+        }
+        this.movies = newArr;
     }
 
 
