@@ -31,9 +31,9 @@ public class CustomerSet {
     /**
      * <p>Class getters</p>
      */
-    public static int getMovieIsFullError(){ return customerIsFullError; }
-    public static int getMovieIsExistingError(){ return customerIsExistingError; }
-    public static int getMovieIsNotExistingError(){ return customerIsNotExistingError; }
+    public static int getCustomerIsFullError(){ return customerIsFullError; }
+    public static int getCustomerIsExistingError(){ return customerIsExistingError; }
+    public static int getCustomerIsNotExistingError(){ return customerIsNotExistingError; }
     public static int getFunctionCompletedSuccessfully(){ return functionCompletedSuccessfully; }
 
 
@@ -162,6 +162,7 @@ public class CustomerSet {
 
     /**<p><u>Purpose: Remove a customer from {@code customers} directly</u></p>
      * <p><b>This is sub-function of {@link #removeCustomer(Customer)}</b></p>
+     * <p><b>Used functions: {@link #findCustomerByDetails(Customer)}</b></p>
      * @param customer a customer to remove*/
     private void customerRemover( Customer customer ){
         int removeIndex = findCustomerByDetails( customer );

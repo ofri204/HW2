@@ -175,6 +175,7 @@ public class MoviesSet {
 
     /**<p><u>Purpose: Remove a movie from {@code movies} directly</u></p>
      * <p><b>This is sub-function of {@link #removeMovie(Movie)}</b></p>
+     * <p><b>Used functions: {@link #findMovieByDetails(Movie)}</b></p>
      * @param movie a movie to remove*/
     private void movieRemover( Movie movie ){
         int removeIndex = findMovieByDetails( movie );
