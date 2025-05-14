@@ -1,12 +1,14 @@
 public class Director {
     private String name ;
     private String biography;
-    private Movie[] movies;
+    private MoviesSet movies;
+    private static final boolean isMovieLegthLimited = false;
+    private static final int defaultIntialMoviesSize = 5;
 
     public Director(String name, String biography) {
         this.name = name;
         this.biography = biography;
-        this.movies = new Movie[0];
+        this.movies = new MoviesSet(defaultIntialMoviesSize, isMovieLegthLimited);
     }
 
     public Director( Director director){

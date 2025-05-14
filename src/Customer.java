@@ -3,9 +3,9 @@ public class Customer {
 
     private String name;
     private String id;
-    static final int maxMovies= 5;
-    private Customer[] movies;
-
+    private static final int maxMovies= 5;
+    private static final boolean isNumRentMoviesLimited = true;
+    private MoviesSet rentedMovies;
 
     /**
      * Constructs a new Costumer with the specified name and ID.
@@ -16,7 +16,7 @@ public class Customer {
     public Customer(String name, String id) {
         this.name = name;
         this.id = id;
-        this.movies = new Customer[maxMovies];
+        this.rentedMovies = new MoviesSet(maxMovies, isNumRentMoviesLimited);
     }
 
     /**

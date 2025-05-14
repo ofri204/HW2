@@ -3,7 +3,10 @@ public class Movie {
     private EnumGenre genre;
     private int releaseYear;
     private Director director;
-    private Customer[] customers;
+    private CustomerSet customersRented;
+    private static final boolean isCustomersRentedLimited = false;
+    private static final int defaultCustomerSize = 5;
+
     private boolean isRented;
 
     /**
@@ -21,7 +24,7 @@ public class Movie {
         this.genre = genre;
         this.releaseYear = releaseYear;
         this.director = new Director(director);
-        this.customers = new Customer[0];
+        this.customersRented = new CustomerSet(defaultCustomerSize, isCustomersRentedLimited);
         this.isRented = false;
     }
 
