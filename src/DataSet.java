@@ -85,7 +85,7 @@ public class DataSet {
             return ERROR;
         }
 
-        this.data [ activeItems ] = new String( item );
+        this.data[ activeItems ] = new String( item );
         activeItems++;
 
         return 0;
