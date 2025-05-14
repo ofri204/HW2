@@ -162,14 +162,17 @@ public class MoviesSet {
     private int removeMovie( String name, int releaseYear, String directorName){
         if( isMovieExisting(name, releaseYear, new Director(directorName, emptyBiography)) ){
             return movieIsNotExistingError;
-        } else if( isMovieRented( findMovieByDetails(name, releaseYear, directorName)) ){
-            return movieIsRentedError;
-        } else{
-            movieRemover( name, releaseYear, directorName);
-            return functionCompletedSuccessfully;
         }
-    }
+        int found = findMovieByDetailsInRented(name, releaseYear, directorName);
 
+        if( found != movieIsNotExistingError && isMovieRented( found) ){
+            return movieIsRentedError;
+        }
+
+        movieRemover( name, releaseYear, directorName);
+        return functionCompletedSuccessfully;
+
+    }
 
     /**
      * <p>Checks if movie is rented by a customer</p>
@@ -190,31 +193,44 @@ public class MoviesSet {
      * @param directorName director name of the movie which is removed
      * */
     private void movieRemover( String name, int releaseYear, String directorName){
-        removeMovieFromMovies( findMovieByDetails(name, releaseYear, directorName) );
+        removeMovieFromMovies( findMovieByDetailsInMovies(name, releaseYear, directorName) );
         removeMovieFromUnrented( findMovieByDetailsInUnrented(name, releaseYear, directorName));
+    }
+
+    private static void removeMovieFromArr( Movie[] moviesArr, int activeMoviesInArr,
+                                            int removeIndex ){
+        moviesArr[removeIndex] = null;
+        for( int i = removeIndex; i < activeMoviesInArr && i+1 < activeMoviesInArr; i++){
+            moviesArr[i] = moviesArr[i+1];
+        }
     }
 
     /**
      * <p>Removes movie from {@code movies}</p>
      * @param removedMovieIndex index of the movie which is removed*/
     private void removeMovieFromMovies( int removedMovieIndex){
-        movies[removedMovieIndex] = null;
-        for( int i = removedMovieIndex; i < activeMovies && i+1 < activeMovies; i++){
-            movies[i] = movies[i+1];
-        }
+        removeMovieFromArr(this.movies, this.activeMovies, removedMovieIndex);
     }
 
     /**
      * <p>Removes movie from {@code unRentedMovies}</p>
      * @param removedMovieIndex index of the movie which is removed*/
     private void removeMovieFromUnrented( int removedMovieIndex){
-        unRentedMovies[removedMovieIndex] = null;
-        int activeUnrented = activeMovies - activeRentedMovies;
-        for( int i = removedMovieIndex; i < activeUnrented && i+1 < activeUnrented; i++){
-            unRentedMovies[i] = unRentedMovies[i+1];
-        }
+        removeMovieFromArr(this.unRentedMovies, this.activeMovies - this.activeRentedMovies
+                , removedMovieIndex);
+
     }
 
+    private void removeMovieFromRented( int removedMovieIndex){
+        removeMovieFromArr(this.rentedMovies, this.activeRentedMovies, removedMovieIndex);
+
+    }
+
+
+    public int findMovieByDetailsInRented( String name, int releaseYear, String directorName ) {
+        return findMovieByDetailsSub(rentedMovies, activeRentedMovies, name, releaseYear,
+                directorName);
+    }
 
     /**
      * <p>Find index of a movie in {@code movies}</p>
@@ -225,15 +241,8 @@ public class MoviesSet {
      *          in {@code movies}</p>
      *          <p>otherwise, {@code movieIsNotExistingError}</p>
      * */
-    int findMovieByDetails( String name, int releaseYear, String directorName ){
-        int found = movieIsNotExistingError;
-        for( int i = 0; i < activeMovies; i++){
-            if( movies[i].isEquals(name, releaseYear, new Director(directorName, emptyBiography))){
-                found = i;
-                break;
-            }
-        }
-        return found;
+    public int findMovieByDetailsInMovies( String name, int releaseYear, String directorName ){
+        return findMovieByDetailsSub(movies, activeMovies, name, releaseYear, directorName);
     }
 
 
@@ -246,11 +255,26 @@ public class MoviesSet {
      *          in {@code unRentedMovies}</p>
      *          <p>otherwise, {@code movieIsNotExistingError}</p>
      * */
-    int findMovieByDetailsInUnrented( String name, int releaseYear, String directorName ){
-        int found = movieIsNotExistingError, activeUnrented = activeMovies - activeRentedMovies;
-        for( int i = 0; i < activeUnrented; i++){
-            if( unRentedMovies[i].isEquals(name, releaseYear,
-                    new Director(directorName, emptyBiography))){
+    public int findMovieByDetailsInUnrented( String name, int releaseYear, String directorName ){
+        return findMovieByDetailsSub( unRentedMovies, activeMovies - activeRentedMovies,
+                name, releaseYear, directorName);
+    }
+
+    private static int findMovieByDetailsSub( Movie[] movieArr, int activeMoviesInArr,
+                                              String name, int releaseYear,
+                                       String directorName){
+        Movie searchedMovie = new Movie( name, null, releaseYear,
+                new Director( directorName, emptyBiography));
+        return findMovieByDetailsMain( movieArr, activeMoviesInArr ,
+                searchedMovie);
+    }
+
+
+    private static int findMovieByDetailsMain( Movie[] movieArr, int activeMoviesInArr
+            , Movie searchedMovie){
+        int found = movieIsNotExistingError;
+        for( int i = 0; i < activeMoviesInArr; i++){
+            if( movieArr[i].isEquals( searchedMovie) ){
                 found = i;
                 break;
             }
