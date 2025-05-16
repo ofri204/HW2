@@ -84,7 +84,7 @@ public class MoviesSet {
      * @return <p>{@code movieIsFullError} if {@code movies} is full of movies</p>
      *          <p>{@code movieIsExistingError} if the movie is existing in {@code movies}</p>
      *          <p>otherwise, it returns {@code functionCompletedSuccessfully}</p>*/
-    private int addNewMovie(Movie movie){
+    public int addNewMovie(Movie movie){
         if (  this.isFinalSize && isFull() ){
             return movieIsFullError;
         } else if( isMovieExisting( movie )){
