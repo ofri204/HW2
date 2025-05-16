@@ -5,7 +5,7 @@ public class Movie {
     private Director director;
     private CustomerSet customersRented;
 
-    private boolean isRented;
+
 
     /**
      * Constructor for the Movie class.
@@ -24,7 +24,7 @@ public class Movie {
         this.releaseYear = releaseYear;
         this.director = director;
         this.customersRented = new CustomerSet(defaultCustomerSize, isCustomersRentedLimited);
-        this.isRented = false;
+
     }
 
 
@@ -73,15 +73,8 @@ public class Movie {
      * @return true if the movie is rented, otherwise false
      * */
     public boolean isRented(){
-        return this.isRented;
+        return !customersRented.isEmpty();
     }
 
-    /**
-     * <p>Changes the rent movie status</p>
-     * <p><b>Note: if movie is rented, it is changed to be unrented, and if the movie is
-     * unrented, it is changed to be rented</b></p>
-     * */
-    public void changeMovieRentedStatus(){
-        this.isRented = !this.isRented;
-    }
 }
+
