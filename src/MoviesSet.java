@@ -1,6 +1,5 @@
 public class MoviesSet {
 
-
     /**<p>Different System Errors</p>*/
     private static final int movieIsFullError = -1;
     private static final int movieIsExistingError = -2;
@@ -86,7 +85,7 @@ public class MoviesSet {
      *          <p>{@code movieIsExistingError} if the movie is existing in {@code movies}</p>
      *          <p>otherwise, it returns {@code functionCompletedSuccessfully}</p>*/
     private int addNewMovie(Movie movie){
-        if ( isFull() && this.isFinalSize){
+        if (  this.isFinalSize && isFull() ){
             return movieIsFullError;
         } else if( isMovieExisting( movie )){
             return movieIsExistingError;
@@ -185,6 +184,9 @@ public class MoviesSet {
         for( int i = removeIndex; i < this.activeMovies; i++){
             this.movies[i] = this.movies[i+1];
         }
+        this.movies[ this.activeMovies + 1 ] = null;
+
+
     }
 
 }

@@ -83,7 +83,7 @@ public class DirectorSet {
          *          <p>{@code directorIsExistingError} if the director is existing in {@code directors}</p>
          *          <p>otherwise, it returns {@code functionCompletedSuccessfully}</p>*/
         private int addNewDirector(Director director){
-            if ( isFull() && this.isFinalSize){
+            if ( this.isFinalSize && isFull() ){
                 return directorIsFullError;
             } else if( isDirectorExisting( director )){
                 return directorIsExistingError;
@@ -171,6 +171,7 @@ public class DirectorSet {
             for( int i = removeIndex; i < this.activeDirectors; i++){
                 this.directors[i] = this.directors[i+1];
             }
+            this.directors[ this.activeDirectors + 1 ] = null;
         }
 
     }

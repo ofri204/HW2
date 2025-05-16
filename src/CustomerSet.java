@@ -85,7 +85,7 @@ public class CustomerSet {
      *          <p>{@code customerIsExistingError} if the customer is existing in {@code customers}</p>
      *          <p>otherwise, it returns {@code functionCompletedSuccessfully}</p>*/
     private int addNewCustomer(Customer customer){
-        if ( isFull() && this.isFinalSize ){
+        if (  this.isFinalSize && isFull() ){
             return customerIsFullError;
         } else if( isCustomerExisting( customer )){
             return customerIsExistingError;
@@ -171,8 +171,11 @@ public class CustomerSet {
         for( int i = removeIndex; i < this.activeCustomers; i++){
             this.customers[i] = this.customers[i+1];
         }
-    }
+        this.customers[ this.activeCustomers + 1 ] = null;
 
+
+
+    }
 }
 
 
