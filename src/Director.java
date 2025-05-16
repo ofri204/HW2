@@ -23,4 +23,13 @@ public class Director {
     public boolean isEquals( Director director ){
         return this.name.equals(director.getName());
     }
+
+    public void removeMovie( Movie movie ){
+        this.movies.removeMovie(movie);
+    }
+
+    public boolean hasMovies(){
+        return !this.movies.isEmpty();
+    }
+
 }

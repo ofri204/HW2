@@ -67,7 +67,7 @@ public class MoviesSet {
         return this.findMovieByDetails( movie ) == MoviesSet.movieIsNotExistingError;
     }
 
-    public Movie findMovie( Movie movie){
+    public Movie findMovie( Movie movie ){
         return this.movies[ this.findMovieByDetails( movie ) ];
     }
 
@@ -120,18 +120,6 @@ public class MoviesSet {
             newArr[i] = this.movies[i];
         }
         this.movies = newArr;
-    }
-
-
-
-    /**
-     * <p><u>Purpose: Checks if movie is rented by a customer</u></p>
-     * <p><b>Note: {@code movieIndex} is the index in {@code movies}</b></p>
-     * @param movieIndex index of a movie in {@code movies}
-     * @return true if the movie is rented, otherwise false;
-     * */
-    public boolean isMovieRented( int movieIndex ){
-        return this.movies[movieIndex].isRented();
     }
 
 

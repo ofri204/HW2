@@ -167,6 +167,12 @@ public class DirectorSet {
             this.directors[ this.activeDirectors + 1 ] = null;
         }
 
+
+    public Director findDirector( Movie movie ){
+        return this.directors [this.findDirectorByDetails( movie.getDirector() ) ] ;
+    }
+
+
     }
 
 
