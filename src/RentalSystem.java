@@ -1,8 +1,12 @@
 public class RentalSystem {
+
+    /**<p><u>General System Data Sets</u></p>*/
     private CustomerSet customers;
     private MoviesSet movies;
     private DirectorSet directors;
 
+
+    /**<p><u>General Properties of Data Sets</u></p>*/
     private static final int maxMovieNum = 30;
     private static final int maxCustomerNum = 30;
     private static final boolean isMovieSetFinal = true;
@@ -10,6 +14,8 @@ public class RentalSystem {
     private static final boolean isDirectorSetFinal = false;
     private static final boolean isCustomerMovieSetFinal = true;
 
+
+    /** <p><u>General System Messages</u></p>*/
     private static final String customerReachedLimitMessage = "The customer has reached the limit";
     private static final String customerAlreadyRentedMessage = "Customer already has this movie";
     private static final String customerNotFoundMessage = "Customer not found.";
@@ -21,45 +27,77 @@ public class RentalSystem {
     private static final String cannotAddMovieMessage = "Cannot add movie.";
     private static final String movieAddedToSystemMessage = "Movie added to system successfully";
 
-
+    /**<p><u>RentalSystem Class Builder</u></p>*/
     public RentalSystem(){
         this.customers = new CustomerSet(maxCustomerNum, isCustomerSetFinal);
         this.directors = new DirectorSet(maxMovieNum, isDirectorSetFinal);
         this.movies = new MoviesSet(maxMovieNum, isMovieSetFinal);
     }
 
+    /**<u>Purpose: Rent an existing movie for a customer</u>
+     * <p><b><br>Notes:
+     * <br>- Movie must exist in system
+     * <br>- Customer array must not be full if the customer is new
+     * <br>- Customer cannot rent the same movie twice</b></p>
+     * <b>Used functions: {@link #hasRentMovieErrors(Movie, Customer)}, {@link #updateMovieAndCustomer(Movie, Customer)}</b>
+     * @param customerName Customer's name
+     * @param customerId Customer's ID
+     * @param movieName Movie title
+     * @param releaseYear Release year of the movie
+     * @param directorName Director's name
+     */
     public void rentMovie(String customerName, String customerId, String movieName, int releaseYear,
             String directorName) {
-        Customer currentCustomer = new Customer(customerName, customerId,
+        Customer tempCustomer = new Customer(customerName, customerId,
                 RentalSystem.maxCustomerNum, RentalSystem.isCustomerMovieSetFinal);
 
-        Director currentDirector = new Director(
+        Director tempDirector = new Director(
                 directorName, null, 0, false);
 
-        Movie currentMovie = new Movie(movieName, null, releaseYear, currentDirector, 0, false);
+        Movie tempMovie = new Movie(movieName, null, releaseYear, tempDirector, 0, false);
 
-        if ( hasRentMovieErrors( currentMovie, currentCustomer) ) {
+        //check for errors
+        if ( hasRentMovieErrors( tempMovie, tempCustomer) ) {
             return;
         }
 
-        updateMovieAndCustomer( currentMovie, currentCustomer);
+        //add the movie to user, and the user to movie
+        updateMovieAndCustomer( tempMovie, tempCustomer);
     }
 
+
+    /**<u>Purpose: Remove a movie from the system if it's not currently rented</u>
+     * <br><b>Used functions: {@link #hasRemoveMovieErrors(Movie)}, {@link #findMovie(Movie)}, {@link #findDirector(Movie)}, {@link #removeDirector(Director)}</b>
+     * @param movieName Movie title
+     * @param releaseYear Release year
+     * @param directorName Director's name
+     */
     public void removeMovie(String movieName, int releaseYear, String directorName){
-        Director currentDirector = new Director( directorName, null, 0, false );
-        Movie currentMovie = new Movie( movieName, null ,releaseYear, currentDirector,
-                0, false);
-        if( this.hasRemoveMovieErrors( currentMovie) ){
+        Director tempDirector = new Director( directorName, null, 0, false );
+        Movie tempMovie = new Movie( movieName, null ,releaseYear, tempDirector, 0, false);
+
+        //check errors
+        if( this.hasRemoveMovieErrors( tempMovie) ){
             return;
         }
 
-        Movie realMovie = this.findMovie( currentMovie );
+        //remove the movie from movies
+        Movie realMovie = this.findMovie( tempMovie );
         this.movies.removeMovie(realMovie);
-        Director movieDirector = this.findDirector( realMovie );
-        movieDirector.removeMovie( realMovie );
 
-        if( !movieDirector.hasMovies() ){
-            this.directors.removeDirector( movieDirector );
+        Director movieDirector = this.findDirector( realMovie );
+        movieDirector.removeMovie( realMovie ); //remove movie from director
+
+        this.removeDirector( movieDirector ); //remove director if he hasn't any movies
+    }
+
+    /**<u>Purpose: Remove a director if they have no more movies associated</u>
+     * <br><b>Sub-function of: {@link #removeMovie(String, int, String)}</b>
+     * @param director {@code director} to check and potentially remove
+     */
+    private void removeDirector( Director director ){
+        if( !director.hasMovies() ){
+            this.directors.removeDirector( director );
         }
     }
 
@@ -85,88 +123,201 @@ public class RentalSystem {
 
 
 
+
+    /**<u>Purpose: Print a system message to the console</u>
+     * @param message The {@code message} to print
+     */
     public static void printMessage(String message){
         System.out.println( message );
     }
+
+
+    /**<u>Purpose: Find a movie in the system</u>
+     * <br><b>Sub-function of: {@link #rentMovie(String, String, String, int, String)},
+     * {@link #removeMovie(String, int, String)}, {@link #hasRemoveMovieErrors(Movie)}
+     * {@link #updateMovieAndCustomer(Movie, Customer)}, {@link #isExistingMovieRented(Movie)}</b>
+     *
+     * @param movie The {@code movie} object to find
+     * @return The actual movie object from the system
+     */
 
     private Movie findMovie( Movie movie ){
         return this.movies.findMovie( movie );
     }
 
+    /**<u>Purpose: Find a customer in the system</u>
+     * <br><b>Sub-function of: {@link #updateMovieAndCustomer(Movie, Customer)}</b>
+     * @param customer The {@code customer} to find
+     * @return The actual customer from the system
+     */
     private Customer findCustomer(Customer customer){
         return this.customers.findCustomer(customer);
     }
 
-    private boolean isACustomerRentedAMovie( int index, Movie movie){
-        return this.customers.hasCustomerRentedAMovie(index, movie);
+    /**<u>Purpose: Check if a customer has already rented a specific movie</u>
+     * <br><b>Sub-function of: {@link #checkIfCustomerAlreadyRentedMovie(Customer, Movie)}</b>
+     * @param customer {@code customer} to check
+     * @param movie {@code movie} to check
+     * @return true if rented, otherwise false
+     */
+    private boolean isCustomerRentedMovie( Customer customer ,Movie movie){
+        return customer.isMovieRented(movie);
     }
 
+
+    /**<u>Purpose: Check if a customer exists in the system</u>
+     * <br><b>Sub-function of: {@link #isCustomerExist(Customer)},
+     * {@link #updateMovieAndCustomer(Movie, Customer)}</b>
+     * @param customer The {@code customer} to check
+     * @return true if exists, otherwise false
+     */
     private boolean isCustomerExistInSystem( Customer customer){
         return this.customers.isCustomerExisting( customer );
     }
 
+    /**<u>Purpose: Check if customers array has reached its limit</u>
+     *<br> <b>Sub-function of: {@link #checkIfNewCustomerAndNoPlace(Customer)}</b>
+     * @return true if full, otherwise false
+     */
     private boolean isCustomersFull(){
         return this.customers.isFull();
     }
 
+
+    /**<u>Purpose: Check if a movie exists in the system</u>
+     * <br><b>Sub-function of: {@link #checkIfMovieNotExist(Movie)}</b>
+     * @param movie {@code movie} to check
+     * @return true if exists, otherwise false
+     */
     private boolean isMovieExistInSystem( Movie movie ){
         return this.movies.isMovieExisting(movie);
     }
 
+    /**<u>Purpose: Add a new customer to the system</u>
+     * <br><b>Sub-function of: {@link #updateMovieAndCustomer(Movie, Customer)}</b>
+     * @param customer {@code customer} to add
+     */
     private void addCustomer( Customer customer){
         this.customers.addNewCustomer( customer ) ;
     }
 
+    /**<u>Purpose: Find the director of a specific movie</u>
+     * <br><b>Sub-function of: {@link #removeMovie(String, int, String)}</b>
+     * @param movie The {@code movie} to locate its director
+     * @return The {@code director} object
+     */
     private Director findDirector( Movie movie ){
         return this.directors.findDirector( movie );
     }
 
+    /**<u>Purpose: Update movie and customer records when renting</u>
+     * <br><b>Used functions: {@link #findMovie(Movie)}, {@link #findCustomer(Customer)},
+     * {@link #addCustomer(Customer)}</b>
+     * <br><b>Sub-function of: {@link #rentMovie(String, String, String, int, String)}</b>
+     * @param movie The {@code movie} to update
+     * @param customer The {@code customer} to update
+     */
     private void updateMovieAndCustomer( Movie movie, Customer customer ){
         if( !isCustomerExistInSystem( customer ) ){
             this.addCustomer(customer);
         }
 
-        Movie currentMovie = this.findMovie(movie);
-        Customer currentCustomer=  this.findCustomer(customer);
+        Movie realMovie = this.findMovie(movie);
+        Customer realCustomer=  this.findCustomer(customer);
 
-        currentMovie.addCustomer( customer );
-        currentCustomer.addMovie( movie );
-
+        realMovie.addCustomer( customer );
+        realCustomer.addMovie( movie );
     }
 
-    private boolean hasRentMovieErrors( Movie movie, Customer customer ){
-        if ( isMovieExistInSystem( movie ) ) {
+    /**<p><u>Purpose: Check if a movie isn't existing in the system</u></p>
+     * <p><b>Used functions: {@link #isMovieExistInSystem(Movie)}</b></p>
+     * @param movie a movie to check
+     * @return true if the movie is existing, otherwise false*/
+    private boolean checkIfMovieNotExist( Movie movie) {
+        if (!isMovieExistInSystem(movie)) {
             RentalSystem.printMessage(RentalSystem.movieIsnNotExistMessage);
             return true;
-        } else if ( !this.isCustomerExistInSystem( customer ) ) {
-           if ( this.isCustomersFull() ) {
-               RentalSystem.printMessage((RentalSystem.customerReachedLimitMessage));
-               return true;
-           } else{
-               return false;
-           }
-        } else {
-            int index = this.customers.findCustomerByDetails( customer );
-            if( isACustomerRentedAMovie(index, movie) ){
-                printMessage(RentalSystem.customerAlreadyRentedMessage);
-                return true;
-            } else{
-                return false;
-            }
         }
+        return false;
     }
 
-    private boolean hasRemoveMovieErrors( Movie movie) {
-        if( !this.isMovieExistInSystem( movie ) ){
-            RentalSystem.printMessage( RentalSystem.movieIsnNotExistMessage );
+    /**<u>Purpose: Wrapper for {@link #isCustomerExistInSystem(Customer)}</u>
+     * <br><b>Sub-function of: {@link #checkIfNewCustomerAndNoPlace(Customer)}</b>
+     * @param customer {@code customer} to check
+     * @return true if exists
+     */
+    private boolean isCustomerExist( Customer customer){
+        return this.isCustomerExistInSystem( customer );
+    }
+
+
+    /**<u>Purpose: Check if new customer can't be added due to system limit</u>
+     * <br><b>Used functions: {@link #isCustomerExist(Customer)}, {@link #isCustomersFull()}</b>
+     * <br><b>Sub-function of: {@link #hasRentMovieErrors(Movie, Customer)}</b>
+     * @param customer The {@code customer} to check
+     * @return true if new and no place, otherwise false
+     */
+    private boolean checkIfNewCustomerAndNoPlace( Customer customer ){
+        if ( !isCustomerExist( customer ) && this.isCustomersFull() ) {
+            RentalSystem.printMessage((RentalSystem.customerReachedLimitMessage));
             return true;
-        } else{
-            Movie realMovie = this.findMovie( movie );
-            if( realMovie.isRented() ){
-                RentalSystem.printMessage( RentalSystem.cannotRemoveMovieMessage );
-                return true;
-            }
-            return false;
         }
+        return false;
+    }
+
+
+    /**<u>Purpose: Check if customer already rented the specified movie</u>
+     * <br><b>Used functions: {@link #isCustomerRentedMovie(Customer, Movie)}</b>
+     * <br><b>Sub-function of: {@link #hasRentMovieErrors(Movie, Customer)}</b>
+     * @param customer The {@code customer}
+     * @param movie The {@code movie}
+     * @return true if already rented
+     */
+    private boolean checkIfCustomerAlreadyRentedMovie( Customer customer, Movie movie){
+        if( isCustomerRentedMovie( customer, movie ) ){
+            printMessage(RentalSystem.customerAlreadyRentedMessage);
+            return true;
+        }
+        return false;
+    }
+
+    /**<u>Purpose: Validate errors before renting a movie</u>
+     * <br></vr><b>Used functions: {@link #checkIfMovieNotExist(Movie)}, {@link #checkIfNewCustomerAndNoPlace(Customer)}, {@link #checkIfCustomerAlreadyRentedMovie(Customer, Movie)}</b>
+     * <br><b>Sub-function of: {@link #rentMovie(String, String, String, int, String)}</b>
+     * @param movie {@code movie} object
+     * @param customer {@code customer} object
+     * @return true if any error occurs, otherwise false
+     */
+    private boolean hasRentMovieErrors( Movie movie, Customer customer ){
+        return checkIfMovieNotExist(movie) ||
+               checkIfNewCustomerAndNoPlace( customer) ||
+               checkIfCustomerAlreadyRentedMovie( customer, movie);
+    }
+
+
+    /**<u>Purpose: Check if an existing movie is currently rented</u>
+     * <br><b>Used functions: {@link #findMovie(Movie)}</b>
+     * <br><b>Sub-function of: {@link #hasRemoveMovieErrors(Movie)}</b>
+     * @param movie {@code movie} to check
+     * @return true if rented, otherwise false
+     */
+    private boolean isExistingMovieRented( Movie movie ){
+        Movie realMovie = this.findMovie( movie );
+        if( realMovie.isRented() ){
+            RentalSystem.printMessage( RentalSystem.cannotRemoveMovieMessage );
+            return true;
+        }
+        return false;
+    }
+
+
+    /**<u>Purpose: Check if there are any errors that prevent movie removal</u>
+     * <br><b>Used functions: {@link #checkIfMovieNotExist(Movie)}, {@link #isExistingMovieRented(Movie)}</b>
+     * <br><b>Sub-function of: {@link #removeMovie(String, int, String)}</b>
+     * @param movie {@code movie} to check
+     * @return true if there are errors
+     */
+    private boolean hasRemoveMovieErrors( Movie movie) {
+        return checkIfMovieNotExist( movie ) || isExistingMovieRented( movie );
     }
 }
