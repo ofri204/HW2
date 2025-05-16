@@ -22,8 +22,8 @@ public class Customer {
      *
      * @return the customer's name
      */
-    public String GetName() {
-        return name;
+    public String getName() {
+        return this.name;
     }
 
     /**
@@ -31,8 +31,8 @@ public class Customer {
      *
      * @return the customer's ID
      */
-    public String GetId(String id) {
-        return id;
+    public String getId() {
+        return this.id;
     }
 
     /**
@@ -40,7 +40,7 @@ public class Customer {
      * @param customer a customer
      * @return true if the customer are identical, otherwise false*/
     public boolean isEquals( Customer customer ){
-        return this.equals( customer );
+        return this.id.equals(customer.getId()) && this.name.equals(customer.getName()) ;
     }
 }
 
