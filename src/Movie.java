@@ -42,34 +42,38 @@ public class Movie {
      *
      * @return the director's name
      */
-    public String getDirectorName() {
-        return this.director.getName();
+    public Director getDirector() {
+        return this.director;
     }
+
+    public String getName(){
+        return this.name;
+    }
+
+
+
+
+
 
 
     /** Prints the movie's details, including title, genre, release year, and director **/
     public void printMovie() {
         System.out.println("Title:" + this.name + ", Genre:" + this.genre + ", Year:" + this.releaseYear
-                + ", Director:" + getDirectorName());
+                + ", Director:" + this.director.getName());
     }
 
     /**
      * <p>Checks if details of one movie equals to the details of the current movie</p>
      * <p><b>Note: 2 movies are the same if they have the same name, release year and director
      * </b></p>
-     * @param name name of a movie
-     * @param releaseYear release year of a movie
-     * @param director director of a movie
+     * @param movie a movie to compare
      * @return true if the movies are the same, otherwise false
      * */
-    public boolean isEquals( String name, int releaseYear, Director director){
-        return this.name.equals(name) && this.releaseYear == releaseYear &&
-                this.director.isEquals(director);
+    public boolean isEquals( Movie movie){
+        return this.name.equals( movie.getName() ) && this.releaseYear == movie.getReleaseYear() &&
+                this.director.isEquals(movie.getDirector() );
     }
 
-    public boolean isEquals( Movie movie ){
-        return this.equals( movie );
-    }
     /**
      * <p>Checks if the movie is rented</p>
      * @return true if the movie is rented, otherwise false

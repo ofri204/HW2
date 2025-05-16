@@ -146,7 +146,7 @@ public class MoviesSet {
     private int findMovieByDetails( Movie movie){
         int found = movieIsNotExistingError;
         for( int i = 0; i < this.activeMovies; i++){
-            if( this.movies[i].isEquals( movie) ){
+            if( this.movies[i].isEquals( movie ) ){
                 found = i;
                 break;
             }

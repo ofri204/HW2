@@ -4,11 +4,11 @@ public class Director {
     private MoviesSet movies;
 
 
-    public Director(String name, String biography, int defaultIntialMoviesSize,
-                    boolean isMovieLegthLimited) {
+    public Director(String name, String biography, int defaultInitialMoviesSize,
+                    boolean isMovieLengthLimited) {
         this.name = name;
         this.biography = biography;
-        this.movies = new MoviesSet(defaultIntialMoviesSize, isMovieLegthLimited);
+        this.movies = new MoviesSet(defaultInitialMoviesSize, isMovieLengthLimited);
     }
 
     public String getName() {
