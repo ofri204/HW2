@@ -3,8 +3,6 @@ public class Customer {
 
     private String name;
     private String id;
-    private static final int maxMovies= 5;
-    private static final boolean isNumRentMoviesLimited = true;
     private MoviesSet rentedMovies;
 
     /**
@@ -13,10 +11,10 @@ public class Customer {
      * @param name the name of the customer
      * @param id the ID of the customer
      */
-    public Customer(String name, String id) {
+    public Customer(String name, String id, int initialMoviesSize, boolean isNumRentMoviesLimited){
         this.name = name;
         this.id = id;
-        this.rentedMovies = new MoviesSet(maxMovies, isNumRentMoviesLimited);
+        this.rentedMovies = new MoviesSet(initialMoviesSize, isNumRentMoviesLimited);
     }
 
     /**

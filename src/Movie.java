@@ -4,8 +4,6 @@ public class Movie {
     private int releaseYear;
     private Director director;
     private CustomerSet customersRented;
-    private static final boolean isCustomersRentedLimited = false;
-    private static final int defaultCustomerSize = 5;
 
     private boolean isRented;
 
@@ -19,7 +17,8 @@ public class Movie {
      * @param releaseYear the year the movie was released
      * @param director the director of the movie
      */
-    public Movie(String name, EnumGenre genre, int releaseYear, Director director) {
+    public Movie(String name, EnumGenre genre, int releaseYear, Director director,
+                 int defaultCustomerSize, boolean isCustomersRentedLimited) {
         this.name = name;
         this.genre = genre;
         this.releaseYear = releaseYear;
