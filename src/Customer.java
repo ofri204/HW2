@@ -42,6 +42,10 @@ public class Customer {
     public boolean isEquals( Customer customer ){
         return this.id.equals(customer.getId()) && this.name.equals(customer.getName()) ;
     }
+
+    public boolean isMovieRented( Movie movie ){
+        return this.rentedMovies.isMovieExisting( movie);
+    }
 }
 
 
