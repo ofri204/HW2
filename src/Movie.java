@@ -23,7 +23,7 @@ public class Movie {
         this.name = name;
         this.genre = genre;
         this.releaseYear = releaseYear;
-        this.director = new Director(director);
+        this.director = director;
         this.customersRented = new CustomerSet(defaultCustomerSize, isCustomersRentedLimited);
         this.isRented = false;
     }

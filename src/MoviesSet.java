@@ -6,6 +6,7 @@ public class MoviesSet {
     private static final int movieIsExistingError = -2;
     private static final int movieIsNotExistingError = -3;
     private static final int functionCompletedSuccessfully = 0;
+
     /** array of movies */
     private Movie[] movies;
     /** length of {@code movies} */
