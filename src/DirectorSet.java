@@ -54,7 +54,6 @@ public class DirectorSet {
             return this.activeDirectors == size;
         }
 
-
         /**
          * <p><u>Purpose: Checks if a director is in {@code directors}</u></p>
          * p><b>This is sub-function of {@link #addNewDirector(Director)} </b></p>
@@ -62,12 +61,7 @@ public class DirectorSet {
          * @return true if the director is in {@code directors}, otherwise false
          * */
         private boolean isDirectorExisting( Director director ){
-            for( int i=0; i < this.activeDirectors; i++){
-                if( this.directors[i].isEquals( director ) ){
-                    return true;
-                }
-            }
-            return false;
+            return this.findDirectorByDetails( director ) != DirectorSet.directorIsNotExistingError;
         }
 
         /**
@@ -100,7 +94,6 @@ public class DirectorSet {
          * @param director a director to add
          * */
         private void directorAdder(Director director){
-
             if( this.activeDirectors == this.size){
                 expandDirectorArr();
             }

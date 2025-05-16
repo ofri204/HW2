@@ -45,22 +45,30 @@ public class RentalSystem {
             return;
         }
 
-
+        updateMovieAndCustomer( currentMovie, currentCustomer);
     }
 
-    private void rentMovieSub( Movie movie, Customer customer ){
-        int movieIndex = this.movies.findMovieByDetails( movie );
-        if( isCustomerExistInSystem( customer ) ){
-            int customerIndex = this.customers.findCustomerByDetails( customer );
-
+    private void updateMovieAndCustomer( Movie movie, Customer customer ){
+        if( !isCustomerExistInSystem( customer ) ){
+            this.addCustomer(customer);
         }
+        Movie currentMovie = this.findMovie(movie);
+        Customer currentCustomer=  this.findCustomer(customer);
+
+        currentMovie.addCustomer( customer );
+        currentCustomer.addMovie( movie );
+
     }
 
+    private Movie findMovie( Movie movie ){
+        return this.movies.findMovie( movie );
+    }
 
-
+    private Customer findCustomer(Customer customer){
+        return this.customers.findCustomer(customer);
+    }
 
     private boolean hasRentMovieErrors( Movie movie, Customer customer ){
-
         if ( isMovieExistInSystem( movie ) ) {
             RentalSystem.printMessage(RentalSystem.movieIsnNotExistMessage);
             return true;
@@ -80,6 +88,11 @@ public class RentalSystem {
                 return false;
             }
         }
+    }
+
+
+    private void addCustomer( Customer customer){
+        this.customers.addNewCustomer( customer ) ;
     }
 
     private boolean isACustomerRentedAMovie( int index, Movie movie){

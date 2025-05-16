@@ -46,6 +46,10 @@ public class Customer {
     public boolean isMovieRented( Movie movie ){
         return this.rentedMovies.isMovieExisting( movie);
     }
+
+    public void addMovie( Movie movie ){
+        this.rentedMovies.addNewMovie( movie );
+    }
 }
 
 
