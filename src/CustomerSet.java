@@ -175,6 +175,15 @@ public class CustomerSet {
         return customers[index].isMovieRented( movie );
     }
 
+    public Customer findCustomerById( String Id){
+        for (int i=0; i<activeCustomers; i++){
+            if( customers[i].getId().equals( Id ) ){
+                return customers[i];
+            }
+        }
+        return null;
+    }
+
 
 
 }

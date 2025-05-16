@@ -50,6 +50,14 @@ public class Customer {
     public void addMovie( Movie movie ){
         this.rentedMovies.addNewMovie( movie );
     }
+
+    public void removeMovie( Movie movie ){
+        this.rentedMovies.removeMovie( movie);
+    }
+
+    public boolean isRentedMoviesEmpty (){
+        return rentedMovies.isEmpty();
+    }
 }
 
 

@@ -26,6 +26,8 @@ public class RentalSystem {
     private static final String cannotRemoveMovieMessage = "Cannot remove rented movie.";
     private static final String cannotAddMovieMessage = "Cannot add movie.";
     private static final String movieAddedToSystemMessage = "Movie added to system successfully";
+    private static final String cannotFindRentedMovies = "No Rented movies";
+    private static final String cannotFindUnRentedMovies = "No Unrented movies";
 
     /**<p><u>RentalSystem Class Builder</u></p>*/
     public RentalSystem(){
@@ -101,24 +103,56 @@ public class RentalSystem {
         }
     }
 
-    public void AddMovie(String movieName, EnumGenre genre, int releaseYear, String directorName, String biography) {
-        Director newDirector = new Director(directorName, biography, maxMovieNum, isMovieSetFinal);
-        if (!(directors.isDirectorExisting(newDirector))) {
-            directors.addNewDirector(newDirector);
+    /**
+     * Finds an existing director or adds a new one if not already in the system.
+     * A helper method for {@code AddMovie} function
+     *
+     * @param directorName the name of the director
+     * @param biography the biography of the director
+     * @return the existing or newly added director
+     */
+    private Director findOrAddDirector(String directorName , String biography){
+        Director tempDirector = new Director(directorName, biography, maxMovieNum, isMovieSetFinal);
+        if (!(directors.isDirectorExisting(tempDirector))) {
+            directors.addNewDirector(tempDirector);
         }
+        return directors.findDirector(tempDirector);
+    }
 
-        Director director = directors.findDirector(newDirector);
-
+    /**
+     * Checks whether the given director is valid (not null)
+     * If the director is null, prints an error message
+     * A helper method for {@code AddMovie} function
+     *
+     * @param director the Director object
+     * @return true if the director is valid, false otherwise
+     */
+    private boolean IsDirectorValid (Director director){
         if (director == null) {
             printMessage(cannotAddMovieMessage);
+            return false;
         }
+        return true;
+    }
 
+    /**
+     * Adds a new movie to the system. If the director does not exist, adds the director as well.
+     * Prints a success message if the movie was added, or an error if the director is invalid.
+     *
+     * @param movieName the name of the movie
+     * @param genre the genre of the movie
+     * @param releaseYear the year the movie was released
+     * @param directorName the name of the movie's director
+     * @param biography the biography of the director
+     */
+    public void AddMovie(String movieName, EnumGenre genre, int releaseYear, String directorName, String biography) {
+      Director director = findOrAddDirector(directorName, biography);
+        if (!IsDirectorValid(director)) {
+            return;
+        }
         Movie newMovie = new Movie(movieName, genre, releaseYear, director, maxCustomerNum, isCustomerSetFinal);
-
         movies.addNewMovie(newMovie);
-
         printMessage(movieAddedToSystemMessage);
-
     }
 
 
@@ -320,4 +354,43 @@ public class RentalSystem {
     private boolean hasRemoveMovieErrors( Movie movie) {
         return checkIfMovieNotExist( movie ) || isExistingMovieRented( movie );
     }
+
+
+    /**
+     * Prints movies based on their rental status.
+     * Calls the method that prints rented movies and then the one that prints un rented movies.
+     * If no movies match a status, prints the corresponding error message.
+     *
+     * @param isRented indicates whether to print rented (true) or un rented (false) movies
+     * @param errorMessage the message to print if no movies match the status
+     */
+    public void PrintMovies ( boolean isRented, String errorMessage ){
+        movies.printMoviesByIsRented(true , cannotFindRentedMovies);
+        movies.printMoviesByIsRented(false , cannotFindUnRentedMovies);
+    }
+
+    public void returnMovie (String id , String movieName , int releaseYear , String directorName ) {
+        Movie foundmovie= movies.findMovieByNameReleaseYearAndDirectorName (movieName, releaseYear,  directorName);
+
+        Customer foundCustomer = customers.findCustomerById( id );
+        if (foundCustomer == null) {
+            printMessage(customerNotFoundMessage);
+            return;
+        }
+        if (foundmovie == null || !foundCustomer.isMovieRented(foundmovie)) {
+            printMessage(customerCantReturnMessage);
+            return;
+        }
+
+        foundCustomer.removeMovie( foundmovie );
+        foundmovie.removeCustomer(foundCustomer);
+
+        if (foundCustomer.isRentedMoviesEmpty()) {
+            this.customers.removeCustomer(foundCustomer);
+        }
+    }
 }
+
+
+
+

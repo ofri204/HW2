@@ -79,5 +79,9 @@ public class Movie {
         this.customersRented.addNewCustomer( customer );
     }
 
+    public void removeCustomer(Customer customer){
+        this.customersRented.removeCustomer( customer );
+    }
+
 }
 

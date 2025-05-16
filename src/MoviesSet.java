@@ -174,6 +174,52 @@ public class MoviesSet {
         this.movies[ this.activeMovies + 1 ] = null;
     }
 
+    /**
+     * Checks whether a movie should be printed based on its rental status.
+     * A helper method for {@code printMoviesByIsRented}
+     *
+     * @param movie the movie to check
+     * @param isRented true to check for rented movies, false for not rented ones
+     * @return true if the movie's rental status matches the given flag, false otherwise
+     */
+    private boolean ShouldPrintMovie (Movie movie , boolean isRented){
+        return movie.isRented()== isRented;
+    }
+
+    /**
+     * Prints all movies that match the given rental status (rented or not).
+     * If no movies match the status, prints the provided error message.
+     * A helper method for {@code PrintMovies} at RentalSystem class
+     *
+     * @param isRented true to print rented movies, false to print available ones
+     * @param errorMessage the message to print if no movies match the given status
+     */
+    public void printMoviesByIsRented ( boolean isRented, String errorMessage){
+        boolean atLeastOnce=false;
+        for( int i = 0; i < this.activeMovies; i++){
+            if (ShouldPrintMovie(movies[i] , isRented)) {
+                movies[i].printMovie();
+                atLeastOnce=true;
+            }
+        }
+        if (!atLeastOnce) {
+            RentalSystem.printMessage(errorMessage);
+
+        }
+
+    }
+
+    public Movie findMovieByNameReleaseYearAndDirectorName( String movieName , int releaseYear , String directorName){
+        for( int i = 0; i < this.activeMovies; i++){
+            if( this.movies[i].getName().equals(movieName) && this.movies[i].getReleaseYear() == releaseYear &&
+                    this.movies[i].getDirector().getName().equals(directorName)) {
+                return movies[i];
+
+            }
+        }
+        return null;
+    }
+
 }
 
 
