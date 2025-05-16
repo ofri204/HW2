@@ -36,7 +36,6 @@ public class CustomerSet {
     public static int getCustomerIsNotExistingError(){ return customerIsNotExistingError; }
     public static int getFunctionCompletedSuccessfully(){ return functionCompletedSuccessfully; }
 
-
     /**
      * <p><u>Purpose: Check is {@code customers} is empty</u></p>
      * <p><b>Note: {@code customers} is empty if it has nulls in all indexes</b></p>
@@ -56,20 +55,14 @@ public class CustomerSet {
         return this.activeCustomers == size;
     }
 
-
     /**
      * <p><u>Purpose: Checks if a customer is in {@code customers}</u></p>
      * p><b>This is sub-function of {@link #addNewCustomer(Customer)} (customer)} </b></p>
      * @param customer a customer
      * @return true if the customer is in {@code customers}, otherwise false
      * */
-    private boolean isCustomerExisting( Customer customer ){
-        for( int i=0; i < this.activeCustomers; i++){
-            if( this.customers[i].isEquals( customer ) ){
-                return true;
-            }
-        }
-        return false;
+    public boolean isCustomerExisting( Customer customer ){
+        return this.findCustomerByDetails( customer ) != CustomerSet.customerIsNotExistingError;
     }
 
     /**
@@ -84,7 +77,7 @@ public class CustomerSet {
      * @return <p>{@code customerIsFullError} if {@code customers} is full of customers</p>
      *          <p>{@code customerIsExistingError} if the customer is existing in {@code customers}</p>
      *          <p>otherwise, it returns {@code functionCompletedSuccessfully}</p>*/
-    private int addNewCustomer(Customer customer){
+    public int addNewCustomer(Customer customer){
         if (  this.isFinalSize && isFull() ){
             return customerIsFullError;
         } else if( isCustomerExisting( customer )){
@@ -94,7 +87,6 @@ public class CustomerSet {
             return functionCompletedSuccessfully;
         }
     }
-
 
     /**
      * <p><u>Purpose: Adds a customer to {@code customers} directly</u></p>
@@ -123,6 +115,11 @@ public class CustomerSet {
         this.customers = newArr;
     }
 
+    public Customer findCustomer( Customer customer){
+        return this.customers[ this.findCustomerByDetails( customer ) ];
+    }
+
+
     /**
      * <p><u>Purpose: Finds customer in {@code customers}</u></p>
      * <p><b>Note: customer can be detected by 3 parameters: name, director and release year</b></p>
@@ -130,7 +127,7 @@ public class CustomerSet {
      * @return <p>index of the searched customer in {@code customers} if it is existing in
      * {@code customers},</p> <p>otherwise -1</p>
      * */
-    private int findCustomerByDetails( Customer customer){
+    public int findCustomerByDetails( Customer customer){
         int found = customerIsNotExistingError;
         for( int i = 0; i < this.activeCustomers; i++){
             if( this.customers[i].isEquals( customer) ){
@@ -172,10 +169,14 @@ public class CustomerSet {
             this.customers[i] = this.customers[i+1];
         }
         this.customers[ this.activeCustomers + 1 ] = null;
-
-
-
     }
+
+    public boolean hasCustomerRentedAMovie( int index, Movie movie){
+        return customers[index].isMovieRented( movie );
+    }
+
+
+
 }
 
 

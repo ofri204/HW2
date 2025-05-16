@@ -63,13 +63,12 @@ public class MoviesSet {
      * @param movie a movie
      * @return true if the movie is in {@code movies}, otherwise false
      * */
-    private boolean isMovieExisting( Movie movie ){
-        for( int i=0; i < this.activeMovies; i++){
-            if( this.movies[i].isEquals( movie ) ){
-                return true;
-            }
-        }
-        return false;
+    public boolean isMovieExisting( Movie movie ){
+        return this.findMovieByDetails( movie ) == MoviesSet.movieIsNotExistingError;
+    }
+
+    public Movie findMovie( Movie movie){
+        return this.movies[ this.findMovieByDetails( movie ) ];
     }
 
     /**
@@ -84,7 +83,7 @@ public class MoviesSet {
      * @return <p>{@code movieIsFullError} if {@code movies} is full of movies</p>
      *          <p>{@code movieIsExistingError} if the movie is existing in {@code movies}</p>
      *          <p>otherwise, it returns {@code functionCompletedSuccessfully}</p>*/
-    private int addNewMovie(Movie movie){
+    public int addNewMovie(Movie movie){
         if (  this.isFinalSize && isFull() ){
             return movieIsFullError;
         } else if( isMovieExisting( movie )){
@@ -131,7 +130,7 @@ public class MoviesSet {
      * @param movieIndex index of a movie in {@code movies}
      * @return true if the movie is rented, otherwise false;
      * */
-    private boolean isMovieRented( int movieIndex ){
+    public boolean isMovieRented( int movieIndex ){
         return this.movies[movieIndex].isRented();
     }
 
@@ -143,7 +142,7 @@ public class MoviesSet {
      * @return <p>index of the searched movie in {@code movies} if it is existing in
      * {@code movies},</p> <p>otherwise -1</p>
      * */
-    private int findMovieByDetails( Movie movie){
+    public int findMovieByDetails( Movie movie){
         int found = movieIsNotExistingError;
         for( int i = 0; i < this.activeMovies; i++){
             if( this.movies[i].isEquals( movie ) ){
@@ -185,8 +184,6 @@ public class MoviesSet {
             this.movies[i] = this.movies[i+1];
         }
         this.movies[ this.activeMovies + 1 ] = null;
-
-
     }
 
 }

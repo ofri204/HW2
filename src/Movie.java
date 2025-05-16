@@ -6,7 +6,6 @@ public class Movie {
     private CustomerSet customersRented;
 
 
-
     /**
      * Constructor for the Movie class.
      * Initializes the movie with a name, genre, release year, and director.
@@ -74,6 +73,10 @@ public class Movie {
      * */
     public boolean isRented(){
         return !customersRented.isEmpty();
+    }
+
+    public void addCustomer(Customer customer){
+        this.customersRented.addNewCustomer( customer );
     }
 
 }
