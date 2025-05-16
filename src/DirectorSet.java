@@ -60,7 +60,7 @@ public class DirectorSet {
          * @param director a director
          * @return true if the director is in {@code directors}, otherwise false
          * */
-        private boolean isDirectorExisting( Director director ){
+        public boolean isDirectorExisting( Director director ){
             return this.findDirectorByDetails( director ) != DirectorSet.directorIsNotExistingError;
         }
 
@@ -76,7 +76,7 @@ public class DirectorSet {
          * @return <p>{@code directorIsFullError} if {@code directors} is full of directors</p>
          *          <p>{@code directorIsExistingError} if the director is existing in {@code directors}</p>
          *          <p>otherwise, it returns {@code functionCompletedSuccessfully}</p>*/
-        private int addNewDirector(Director director){
+        public int addNewDirector(Director director){
             if ( this.isFinalSize && isFull() ){
                 return directorIsFullError;
             } else if( isDirectorExisting( director )){
@@ -167,13 +167,22 @@ public class DirectorSet {
             this.directors[ this.activeDirectors + 1 ] = null;
         }
 
-
     public Director findDirector( Movie movie ){
-        return this.directors [this.findDirectorByDetails( movie.getDirector() ) ] ;
+        return this.directors[this.findDirectorByDetails( movie.getDirector() ) ] ;
     }
 
+    public Director findDirector (Director director) {
+        int directorIndex = findDirectorByDetails(director);
+        if (directorIndex == directorIsNotExistingError) {
+            return null;
+        }
+        else{
+            return directors[directorIndex];
+        }
 
     }
+
+}
 
 
 

@@ -18,6 +18,8 @@ public class RentalSystem {
     private static final String noRentedMoviesMessage = "No Rented movies.";
     private static final String movieIsnNotExistMessage = "No such movie exists.";
     private static final String cannotRemoveMovieMessage = "Cannot remove rented movie.";
+    private static final String cannotAddMovieMessage = "Cannot add movie.";
+    private static final String movieAddedToSystemMessage = "Movie added to system successfully";
 
 
     public RentalSystem(){
@@ -59,8 +61,29 @@ public class RentalSystem {
         if( !movieDirector.hasMovies() ){
             this.directors.removeDirector( movieDirector );
         }
+    }
+
+    public void AddMovie(String movieName, EnumGenre genre, int releaseYear, String directorName, String biography) {
+        Director newDirector = new Director(directorName, biography, maxMovieNum, isMovieSetFinal);
+        if (!(directors.isDirectorExisting(newDirector))) {
+            directors.addNewDirector(newDirector);
+        }
+
+        Director director = directors.findDirector(newDirector);
+
+        if (director == null) {
+            printMessage(cannotAddMovieMessage);
+        }
+
+        Movie newMovie = new Movie(movieName, genre, releaseYear, director, maxCustomerNum, isCustomerSetFinal);
+
+        movies.addNewMovie(newMovie);
+
+        printMessage(movieAddedToSystemMessage);
 
     }
+
+
 
     public static void printMessage(String message){
         System.out.println( message );
