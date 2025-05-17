@@ -201,18 +201,20 @@ public class MoviesSet {
      * @param errorMessage the message to print if no movies match the given status
      */
     public void printMoviesByIsRented ( boolean isRented, String errorMessage){
-        boolean atLeastOnce=false;
-        for( int i = 0; i < this.activeMovies; i++){
+        for( int i = 0; i< this.activeMovies; i++){
             if (ShouldPrintMovie(movies[i] , isRented)) {
                 movies[i].printMovie();
-                atLeastOnce=true;
             }
         }
-        if (!atLeastOnce) {
-            RentalSystem.printMessage(errorMessage);
+    }
 
+    public boolean hasRenteOrUnRented( boolean isRented){
+        for( int i = 0; i<activeMovies; i++){
+            if( this.movies[i].isRented() == isRented){
+                return true;
+            }
         }
-
+        return false;
     }
 
     /**

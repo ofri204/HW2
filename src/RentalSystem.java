@@ -362,9 +362,22 @@ public class RentalSystem {
      * @param isRented indicates whether to print rented (true) or un rented (false) movies
      * @param errorMessage the message to print if no movies match the status
      */
-    public void PrintMovies ( boolean isRented, String errorMessage ){
-        movies.printMoviesByIsRented(true , cannotFindRentedMovies);
-        movies.printMoviesByIsRented(false , cannotFindUnRentedMovies);
+    public void PrintMovies(){
+        if( this.movies.hasRenteOrUnRented(true) ){
+            RentalSystem.printMessage(RentalSystem.rentedMoviesArrMessage);
+            movies.printMoviesByIsRented(true , cannotFindRentedMovies);
+        } else{
+            RentalSystem.printMessage(RentalSystem.cannotFindRentedMovies);
+        }
+
+        if(this.movies.hasRenteOrUnRented(false)){
+            RentalSystem.printMessage(RentalSystem.unRentedMoviesArrMessage);
+            movies.printMoviesByIsRented(false , cannotFindUnRentedMovies);
+        } else{
+            RentalSystem.printMessage(RentalSystem.cannotFindUnRentedMovies);
+        }
+
+
     }
 
     /**
@@ -441,10 +454,6 @@ public class RentalSystem {
         removeMovieFromCustomerAndSystem(foundCustomer, foundMovie);
     }
 
-    public void printMovies (boolean isRented, String errorMessage ){
-        movies.printMoviesByIsRented( true, cannotFindRentedMovies );
-        movies.printMoviesByIsRented( false, cannotFindUnRentedMovies );
-    }
 
 }
 
