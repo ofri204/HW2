@@ -67,6 +67,12 @@ public class MoviesSet {
         return this.findMovieByDetails( movie ) == MoviesSet.movieIsNotExistingError;
     }
 
+    /**
+     * Finds and returns a movie from the collection that matches the given movie details.
+     *
+     * @param movie the Movie object containing the details to search for
+     * @return the matching Movie object if found; null if not found or index is invalid
+     */
     public Movie findMovie( Movie movie ){
         return this.movies[ this.findMovieByDetails( movie ) ];
     }

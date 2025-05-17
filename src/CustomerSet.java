@@ -115,6 +115,12 @@ public class CustomerSet {
         this.customers = newArr;
     }
 
+    /**
+     * Finds and returns a customer in the system that matches the given customer
+     *
+     * @param customer the Customer object containing the details to search for
+     * @return the matching Customer object if found; null if not found or index is invalid
+     */
     public Customer findCustomer( Customer customer){
         return this.customers[ this.findCustomerByDetails( customer ) ];
     }
@@ -169,10 +175,6 @@ public class CustomerSet {
             this.customers[i] = this.customers[i+1];
         }
         this.customers[ this.activeCustomers + 1 ] = null;
-    }
-
-    public boolean hasCustomerRentedAMovie( int index, Movie movie){
-        return customers[index].isMovieRented( movie );
     }
 
     /**

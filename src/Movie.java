@@ -75,6 +75,11 @@ public class Movie {
         return !customersRented.isEmpty();
     }
 
+    /**
+     * Adds a new customer to the list of customers who rented movies.
+     *
+     * @param customer the customer to add
+     */
     public void addCustomer(Customer customer){
         this.customersRented.addNewCustomer( customer );
     }

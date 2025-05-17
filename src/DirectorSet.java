@@ -167,26 +167,32 @@ public class DirectorSet {
             this.directors[ this.activeDirectors + 1 ] = null;
         }
 
-    public Director findDirector( Movie movie ){
-        return this.directors[this.findDirectorByDetails( movie.getDirector() ) ] ;
-    }
-
-    /**
-     * Finds and returns a director from the system that matches the given director.
-     *
-     * @param director the Director object containing the identifying details
-     * @return the matching Director from the system if found; null if the director does not exist
-     */
-    public Director findDirector (Director director) {
-        int directorIndex = findDirectorByDetails(director);
-        if (directorIndex == directorIsNotExistingError) {
-            return null;
-        }
-        else{
-            return directors[directorIndex];
+        /**
+         * Finds and returns the director of the given movie from the director collection.
+         *
+         * @param movie the movie whose director is to be found
+         * @return the Director corresponding to the movie's director, returns null if the director is not found
+         */
+        public Director findDirector( Movie movie ){
+            return this.directors[this.findDirectorByDetails( movie.getDirector() ) ] ;
         }
 
-    }
+        /**
+         * Finds and returns a director from the system that matches the given director.
+         *
+         * @param director the Director object containing the identifying details
+         * @return the matching Director from the system if found; null if the director does not exist
+         */
+        public Director findDirector (Director director) {
+            int directorIndex = findDirectorByDetails(director);
+            if (directorIndex == directorIsNotExistingError) {
+                return null;
+            }
+            else{
+                return directors[directorIndex];
+            }
+
+        }
 
 }
 

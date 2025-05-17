@@ -43,10 +43,21 @@ public class Customer {
         return this.id.equals(customer.getId()) && this.name.equals(customer.getName()) ;
     }
 
+    /**
+     * Checks if the specified movie is currently rented by the customer.
+     *
+     * @param movie the movie to check
+     * @return true if the movie is rented by the customer, false otherwise
+     */
     public boolean isMovieRented( Movie movie ){
         return this.rentedMovies.isMovieExisting( movie);
     }
 
+    /**
+     * Adds a movie to the customer's rented movies collection.
+     *
+     * @param movie the movie to be added to the rented movies
+     */
     public void addMovie( Movie movie ){
         this.rentedMovies.addNewMovie( movie );
     }

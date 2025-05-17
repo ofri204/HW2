@@ -24,10 +24,20 @@ public class Director {
         return this.name.equals(director.getName());
     }
 
+    /**
+     * Removes the specified movie from the collection of movies.
+     *
+     * @param movie the movie to be removed
+     */
     public void removeMovie( Movie movie ){
         this.movies.removeMovie(movie);
     }
 
+    /**
+     * Checks if there are any movies in the collection.
+     *
+     * @return true if there is at least one movie; false if the collection is empty
+     */
     public boolean hasMovies(){
         return !this.movies.isEmpty();
     }
