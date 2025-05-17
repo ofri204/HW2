@@ -28,7 +28,8 @@ public class RentalSystem {
     private static final String movieAddedToSystemMessage = "Movie added to system successfully";
     private static final String cannotFindRentedMovies = "No Rented movies";
     private static final String cannotFindUnRentedMovies = "No Unrented movies";
-
+    private static final String rentedMoviesArrMessage = "Rented Movies:";
+    private static final String unRentedMoviesArrMessage = "Unrented Movies:";
     /**<p><u>RentalSystem Class Builder</u></p>*/
     public RentalSystem(){
         this.customers = new CustomerSet(maxCustomerNum, isCustomerSetFinal);
@@ -145,7 +146,7 @@ public class RentalSystem {
      * @param directorName the name of the movie's director
      * @param biography the biography of the director
      */
-    public void AddMovie(String movieName, EnumGenre genre, int releaseYear, String directorName, String biography) {
+    public void addMovie(String movieName, Genre genre, int releaseYear, String directorName, String biography) {
       Director director = findOrAddDirector(directorName, biography);
         if (!IsDirectorValid(director)) {
             return;
@@ -154,9 +155,6 @@ public class RentalSystem {
         movies.addNewMovie(newMovie);
         printMessage(movieAddedToSystemMessage);
     }
-
-
-
 
     /**<u>Purpose: Print a system message to the console</u>
      * @param message The {@code message} to print
@@ -389,6 +387,7 @@ public class RentalSystem {
             this.customers.removeCustomer(foundCustomer);
         }
     }
+
 }
 
 

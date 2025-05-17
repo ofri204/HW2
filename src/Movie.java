@@ -1,6 +1,6 @@
 public class Movie {
     private String name;
-    private EnumGenre genre;
+    private Genre genre;
     private int releaseYear;
     private Director director;
     private CustomerSet customersRented;
@@ -16,7 +16,7 @@ public class Movie {
      * @param releaseYear the year the movie was released
      * @param director the director of the movie
      */
-    public Movie(String name, EnumGenre genre, int releaseYear, Director director,
+    public Movie(String name, Genre genre, int releaseYear, Director director,
                  int defaultCustomerSize, boolean isCustomersRentedLimited) {
         this.name = name;
         this.genre = genre;

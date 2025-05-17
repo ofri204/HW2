@@ -1,4 +1,4 @@
-public enum EnumGenre {
+public enum Genre {
     ACTION,
     SCIENCE_FICTION,
     COMEDY,
