@@ -29,15 +29,6 @@ public class MoviesSet {
     }
 
     /**
-     * <p>Class getters</p>
-     */
-    public static int getMovieIsFullError(){ return movieIsFullError; }
-    public static int getMovieIsExistingError(){ return movieIsExistingError; }
-    public static int getMovieIsNotExistingError(){ return movieIsNotExistingError; }
-    public static int getFunctionCompletedSuccessfully(){ return functionCompletedSuccessfully; }
-
-
-    /**
      * <p><u>Purpose: Check is {@code movies} is empty</u></p>
      * <p><b>Note: {@code movies} is empty if it has nulls in all indexes</b></p>
      * @return 1 if {@code movies} is empty, otherwise 0
@@ -47,10 +38,6 @@ public class MoviesSet {
     }
 
 
-    public int getActiveMovies(){
-        return this.activeMovies;
-    }
-
     /**
      * <p><u>Purpose: Check is {@code movies} is full</u></p>
      * <p><b>Note: {@code movies} is full if it hasn't any nulls</b></p>
@@ -58,7 +45,7 @@ public class MoviesSet {
      * @return 1 if {@code movies} is full, otherwise 0
      */
     public boolean isFull(){
-        return this.activeMovies == size;
+        return this.activeMovies >= size;
     }
 
 

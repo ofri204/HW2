@@ -1,10 +1,11 @@
 public class Movie {
+
+    /**Properties of Movie*/
     private String name;
     private Genre genre;
     private int releaseYear;
     private Director director;
     private CustomerSet customersRented;
-
 
     /**
      * Constructor for the Movie class.
@@ -23,9 +24,7 @@ public class Movie {
         this.releaseYear = releaseYear;
         this.director = director;
         this.customersRented = new CustomerSet(defaultCustomerSize, isCustomersRentedLimited);
-
     }
-
 
     /**
      * Returns the release year of the movie.
@@ -45,6 +44,10 @@ public class Movie {
         return this.director;
     }
 
+    /**
+     * Returns the name of the Movie
+     * @return name of the movie
+     */
     public String getName(){
         return this.name;
     }

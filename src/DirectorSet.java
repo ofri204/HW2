@@ -27,15 +27,6 @@ public class DirectorSet {
         }
 
         /**
-         * <p>Class getters</p>
-         */
-        public static int getDirectorIsFullError(){ return directorIsFullError; }
-        public static int getDirectorIsExistingError(){ return directorIsExistingError; }
-        public static int getDirectorIsNotExistingError(){ return directorIsNotExistingError; }
-        public static int getFunctionCompletedSuccessfully(){ return functionCompletedSuccessfully;}
-
-
-        /**
          * <p><u>Purpose: Check is {@code directors} is empty</u></p>
          * <p><b>Note: {@code directors} is empty if it has nulls in all indexes</b></p>
          * @return 1 if {@code directors} is empty, otherwise 0
@@ -133,7 +124,6 @@ public class DirectorSet {
             return found;
         }
 
-
         /**
          * <p><u>Purpose: Check if a director can be removed from {@code directors} and remove it
          * if so</u></p>
@@ -147,11 +137,9 @@ public class DirectorSet {
             if( !isDirectorExisting(director) ){
                 return directorIsNotExistingError;
             }
-
             directorRemover( director );
             return functionCompletedSuccessfully;
         }
-
 
         /**<p><u>Purpose: Remove a director from {@code directors} directly</u></p>
          * <p><b>This is sub-function of {@link #removeDirector(Director)}</b></p>
@@ -191,9 +179,7 @@ public class DirectorSet {
             else{
                 return directors[directorIndex];
             }
-
         }
-
 }
 
 

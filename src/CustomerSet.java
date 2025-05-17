@@ -29,14 +29,6 @@ public class CustomerSet {
     }
 
     /**
-     * <p>Class getters</p>
-     */
-    public static int getCustomerIsFullError(){ return customerIsFullError; }
-    public static int getCustomerIsExistingError(){ return customerIsExistingError; }
-    public static int getCustomerIsNotExistingError(){ return customerIsNotExistingError; }
-    public static int getFunctionCompletedSuccessfully(){ return functionCompletedSuccessfully; }
-
-    /**
      * <p><u>Purpose: Check is {@code customers} is empty</u></p>
      * <p><b>Note: {@code customers} is empty if it has nulls in all indexes</b></p>
      * @return 1 if {@code customers} is empty, otherwise 0

@@ -1,6 +1,7 @@
 /** Represents a customer with a name and an ID. */
 public class Customer {
 
+    /**Customer properties*/
     private String name;
     private String id;
     private MoviesSet rentedMovies;
@@ -80,6 +81,11 @@ public class Customer {
         return rentedMovies.isEmpty();
     }
 
+
+    /**
+     * Checks if the customer rented maximum number of movies
+     * @return true if the customer rented maximum, false otherwise
+     * */
     public boolean isRentedMoviesFull (){
         return rentedMovies.isFull();
     }

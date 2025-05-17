@@ -1,10 +1,11 @@
 public class Director {
 
+    /** Director Properties*/
     private String name ;
     private String biography;
     private MoviesSet movies;
 
-
+    /**Main Director Constructor*/
     public Director(String name, String biography, int defaultInitialMoviesSize,
                     boolean isMovieLengthLimited) {
         this.name = name;
@@ -12,6 +13,9 @@ public class Director {
         this.movies = new MoviesSet(defaultInitialMoviesSize, isMovieLengthLimited);
     }
 
+    /**
+     * Return the name of the director
+     * @return name of director*/
     public String getName() {
         return this.name;
     }

@@ -24,7 +24,6 @@ public class RentalSystem {
     private static final String movieIsnNotExistMessage = "No such movie exists.";
     private static final String cannotRemoveMovieMessage = "Cannot remove rented movie.";
     private static final String cannotAddMovieMessage = "Cannot add movie.";
-    private static final String movieAddedToSystemMessage = "Movie added to system successfully";
     private static final String cannotFindRentedMovies = "No Rented movies.";
     private static final String cannotFindUnRentedMovies = "No Unrented movies.";
     private static final String rentedMoviesArrMessage = "Rented Movies: ";
@@ -139,7 +138,7 @@ public class RentalSystem {
 
 
     private boolean isMoviesFull() {
-        return movies.getActiveMovies() >= maxMovieNum;
+        return this.movies.isFull();
     }
 
     /**
