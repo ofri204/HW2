@@ -165,7 +165,6 @@ public class RentalSystem {
             return;
         }
 
-
         Movie newMovie = new Movie(movieName, genre, releaseYear,
                 director, maxCustomerNum, isCustomerSetFinal);
         //checks if the movie is already existing in system

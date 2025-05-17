@@ -199,6 +199,11 @@ public class MoviesSet {
         }
     }
 
+    /**
+     * Checks if the set has rent or unrented item (depends on input)
+     * @param isRented states if the function search for rented (true) or unrented (false)
+     * @return true if un/rented movie found, false otherwise
+     * */
     public boolean hasRentedOrUnRented( boolean isRented){
         for( int i = 0; i<activeMovies; i++){
             if( this.movies[i].isRented() == isRented){
