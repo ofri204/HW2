@@ -199,7 +199,7 @@ public class MoviesSet {
         }
     }
 
-    public boolean hasRenteOrUnRented( boolean isRented){
+    public boolean hasRentedOrUnRented( boolean isRented){
         for( int i = 0; i<activeMovies; i++){
             if( this.movies[i].isRented() == isRented){
                 return true;

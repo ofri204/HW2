@@ -28,7 +28,7 @@ public class RentalSystem {
     private static final String cannotFindUnRentedMovies = "No Unrented movies.";
     private static final String rentedMoviesArrMessage = "Rented Movies: ";
     private static final String unRentedMoviesArrMessage = "Unrented Movies: ";
-    private static final String systemIsFullMessage= " System is full, Cannot add more movies.";
+    private static final String systemIsFullMessage= "System is full, Cannot add more movies.";
 
     /**<p><u>RentalSystem Class Builder</u></p>*/
     public RentalSystem(){
@@ -136,7 +136,10 @@ public class RentalSystem {
         return true;
     }
 
-
+    /**
+     * Checks if the movies array of the system is full.
+     * @return true if it is full, false otherwise
+     */
     private boolean isMoviesFull() {
         return this.movies.isFull();
     }
@@ -163,7 +166,9 @@ public class RentalSystem {
         }
 
 
-        Movie newMovie = new Movie(movieName, genre, releaseYear, director, maxCustomerNum, isCustomerSetFinal);
+        Movie newMovie = new Movie(movieName, genre, releaseYear,
+                director, maxCustomerNum, isCustomerSetFinal);
+        //checks if the movie is already existing in system
         if( this.isMovieExistInSystem(  newMovie ) ){
             RentalSystem.printMessage(RentalSystem.movieInSystemMessage);
             return;
@@ -188,7 +193,6 @@ public class RentalSystem {
      * @param movie The {@code movie} object to find
      * @return The actual movie object from the system
      */
-
     private Movie findMovie( Movie movie ){
         return this.movies.findMovie( movie );
     }
@@ -273,6 +277,7 @@ public class RentalSystem {
         Movie realMovie = this.findMovie(movie);
         Customer realCustomer=  this.findCustomer(customer);
 
+        //add the movie to customer's movies and the customer to movie's customers
         realMovie.addCustomer( customer );
         realCustomer.addMovie( movie );
     }
@@ -332,6 +337,7 @@ public class RentalSystem {
         if (checkIfMovieNotExist(movie) ||
                 (!isCustomerExist && isCustomersFull(customer))) {
             return true;
+            //if customer exists in the system, it could rent the movie, or maybe he doesn't have space for new one's
         } else if( isCustomerExist  ){
             Customer realCustomer = this.findCustomer( customer );
             return (checkIfCustomerAlreadyRentedMovie(realCustomer, movie) ||
@@ -342,6 +348,11 @@ public class RentalSystem {
 
     }
 
+    /**
+     Checks if a specific customer in the system reached maximum rented movies
+     @param customer the customer to check
+     @return true if the customer reached maximum, false otherwise
+     */
     private boolean isCustomerReachedLimitRentedMovies( Customer customer){
         Customer realCustomer = this.findCustomer( customer );
         if( realCustomer.isRentedMoviesFull() ){
@@ -378,7 +389,6 @@ public class RentalSystem {
         return checkIfMovieNotExist( movie ) || isExistingMovieRented( movie );
     }
 
-
     /**
      * Prints movies based on their rental status.
      * Calls the method that prints rented movies and then the one that prints un rented movies.
@@ -386,7 +396,6 @@ public class RentalSystem {
      *
      */
     public void printMovies(){
-
         printMoviesSub( true, RentalSystem.rentedMoviesArrMessage,
                 RentalSystem.cannotFindRentedMovies);
 
@@ -394,9 +403,14 @@ public class RentalSystem {
                 RentalSystem.cannotFindUnRentedMovies);
     }
 
+    /** Sub-function for printing all rented or unrented movies
+     * @param isRented states if the system needs to print all rented or all unrented movies
+     * @param message start message of the un/rented array display
+     * @param errorMessage errorMessage that is displayed if there isn't any un/rented in the system
+     * */
     private void printMoviesSub( boolean isRented, String message, String errorMessage){
         RentalSystem.printMessage(message);
-        if( this.movies.hasRenteOrUnRented(isRented) ){
+        if( this.movies.hasRentedOrUnRented(isRented) ){
             movies.printMoviesByIsRented(isRented);
         } else{
             RentalSystem.printMessage(errorMessage);
@@ -473,10 +487,8 @@ public class RentalSystem {
         if (!isValidReturn(foundMovie, foundCustomer)) {
             return;
         }
-
         removeMovieFromCustomerAndSystem(foundCustomer, foundMovie);
     }
-
 
 }
 
