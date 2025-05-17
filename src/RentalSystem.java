@@ -441,6 +441,11 @@ public class RentalSystem {
         removeMovieFromCustomerAndSystem(foundCustomer, foundMovie);
     }
 
+    public void printMovies (boolean isRented, String errorMessage ){
+        movies.printMoviesByIsRented( true, cannotFindRentedMovies );
+        movies.printMoviesByIsRented( false, cannotFindUnRentedMovies );
+    }
+
 }
 
 
