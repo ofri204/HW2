@@ -162,11 +162,12 @@ public class CustomerSet {
     private void customerRemover( Customer customer ){
         int removeIndex = findCustomerByDetails( customer );
         this.customers[ removeIndex ] = null;
-        this.activeCustomers--;
-        for( int i = removeIndex; i < this.activeCustomers; i++){
+        for( int i = removeIndex; i < this.activeCustomers - 1; i++){
             this.customers[i] = this.customers[i+1];
         }
-        this.customers[ this.activeCustomers + 1 ] = null;
+
+        this.customers[ this.activeCustomers - 1] = null;
+        this.activeCustomers--;
     }
 
     /**

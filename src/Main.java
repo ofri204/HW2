@@ -1,10 +1,25 @@
 public class Main {
 
     public static void main(String[] args) {
-        test1_MaxRentals();
-        test2_ReturnNonExistent();
-        test3_DuplicateAdd();
-        test4_RemoveRentedOrNonExistent();
+        //test1_MaxRentals();
+        //test2_ReturnNonExistent();
+        //test3_DuplicateAdd();
+        //test4_RemoveRentedOrNonExistent();
+        text_6MaxClients();
+    }
+
+    public static void text_6MaxClients(){
+        RentalSystem rentalSystem = new RentalSystem();
+        rentalSystem.addMovie("Inception", Genre.SCIENCE_FICTION, 2010, "Christopher Nolan", "Director of Inception");
+        for( int i = 0; i < 30; i++){
+            rentalSystem.rentMovie("John Doe", ""+i, "Inception", 2010, "Christopher Nolan");
+        }
+
+        for( int i = 0; i < 30; i++){
+            rentalSystem.returnMovie( ""+i, "Inception", 2010, "Christopher Nolan");
+        }
+
+        rentalSystem.printMovies();
     }
 
     public static void test1_MaxRentals() {

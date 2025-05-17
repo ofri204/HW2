@@ -148,11 +148,12 @@ public class DirectorSet {
         private void directorRemover( Director director ){
             int removeIndex = findDirectorByDetails( director );
             this.directors[ removeIndex ] = null;
-            this.activeDirectors--;
-            for( int i = removeIndex; i < this.activeDirectors; i++){
+            for( int i = removeIndex; i < this.activeDirectors - 1; i++){
                 this.directors[i] = this.directors[i+1];
             }
-            this.directors[ this.activeDirectors + 1 ] = null;
+            this.directors[ this.activeDirectors - 1 ] = null;
+            this.activeDirectors--;
+
         }
 
         /**
