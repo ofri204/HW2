@@ -10,13 +10,24 @@ public class Main {
 
     public static void text_6MaxClients(){
         RentalSystem rentalSystem = new RentalSystem();
-        rentalSystem.addMovie("Inception", Genre.SCIENCE_FICTION, 2010, "Christopher Nolan", "Director of Inception");
+
+        for( int i = 0; i < 31; i++){
+            rentalSystem.addMovie("Inception" + i, Genre.SCIENCE_FICTION, 2010, "Christopher Nolan", "Director of Inception");
+        }
         for( int i = 0; i < 30; i++){
-            rentalSystem.rentMovie("John Doe", ""+i, "Inception", 2010, "Christopher Nolan");
+            rentalSystem.rentMovie("John Doe", ""+i, "Inception" + i, 2010, "Christopher Nolan");
         }
 
-        for( int i = 0; i < 30; i++){
-            rentalSystem.returnMovie( ""+i, "Inception", 2010, "Christopher Nolan");
+        rentalSystem.printMovies();
+
+        for( int i =0; i < 31; i++){
+            rentalSystem.returnMovie(""+i, "Inception" + i, 2010, "Christopher Nolan");
+        }
+
+        rentalSystem.printMovies();
+
+        for( int i = 31; i >= 0; i-=2){
+            rentalSystem.removeMovie( "Inception" + i, 2010, "Christopher Nolan");
         }
 
         rentalSystem.printMovies();

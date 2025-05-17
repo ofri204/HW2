@@ -163,6 +163,7 @@ public class DirectorSet {
          * @return the Director corresponding to the movie's director, returns null if the director is not found
          */
         public Director findDirector( Movie movie ){
+            int index = this.findDirectorByDetails( movie.getDirector() );
             return this.directors[this.findDirectorByDetails( movie.getDirector() ) ] ;
         }
 

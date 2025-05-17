@@ -28,6 +28,9 @@ public class MoviesSet {
         this.isFinalSize = isFinalSize;
     }
 
+    public static int getMovieIsNotExistingError(){
+        return movieIsNotExistingError;
+    }
     /**
      * <p><u>Purpose: Check is {@code movies} is empty</u></p>
      * <p><b>Note: {@code movies} is empty if it has nulls in all indexes</b></p>

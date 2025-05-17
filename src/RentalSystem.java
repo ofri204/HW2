@@ -155,7 +155,7 @@ public class RentalSystem {
      * @param biography the biography of the director
      */
     public void addMovie(String movieName, Genre genre, int releaseYear, String directorName, String biography) {
-      Director director = findOrAddDirector(directorName, biography);
+        Director director = findOrAddDirector(directorName, biography);
         if (!IsDirectorValid(director)) {
             return;
         }
@@ -174,6 +174,7 @@ public class RentalSystem {
         }
 
         movies.addNewMovie(newMovie);
+        director.addMovie( newMovie );
     }
 
     /**<u>Purpose: Print a system message to the console</u>
@@ -477,7 +478,7 @@ public class RentalSystem {
      * @param directorName the name of the director of the movie
      */
     public void returnMovie (String id , String movieName , int releaseYear , String directorName ) {
-        Movie foundMovie= movies.findMovieByNameReleaseYearAndDirectorName (movieName, releaseYear,  directorName);
+        Movie foundMovie = movies.findMovieByNameReleaseYearAndDirectorName(movieName, releaseYear,  directorName);
 
         Customer foundCustomer = getValidCustomerOrPrintMessage(id);
         if (foundCustomer == null) {

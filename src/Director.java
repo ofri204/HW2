@@ -46,4 +46,11 @@ public class Director {
         return !this.movies.isEmpty();
     }
 
+    /**
+     * Add movie to movies of the director
+     * @param movie movie of the director*/
+    public void addMovie( Movie movie){
+        this.movies.addNewMovie(movie);
+    }
+
 }
