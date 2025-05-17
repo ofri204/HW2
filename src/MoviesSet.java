@@ -229,14 +229,17 @@ public class MoviesSet {
      * @param directorName the name of the movie's director
      * @return the Movie object if found; null if no matching movie exists
      */
-    public Movie findMovieByNameReleaseYearAndDirectorName( String movieName , int releaseYear , String directorName){
-        for( int i = 0; i < this.activeMovies; i++){
-            if( this.movies[i].getName().equals(movieName) && this.movies[i].getReleaseYear() == releaseYear &&
-                    this.movies[i].getDirector().getName().equals(directorName)) {
-                return movies[i];
+    public Movie findMovieByNameReleaseYearAndDirectorName( String movieName , int releaseYear,
+                                                            String directorName){
+        Director newDirector = new Director(directorName, null, 0, false);
+        Movie newMovie = new Movie(movieName, null, releaseYear,  newDirector,
+                0, false);
 
-            }
+        int index = this.findMovieByDetails( newMovie );
+        if( index != MoviesSet.movieIsNotExistingError){
+            return this.movies[index];
         }
+
         return null;
     }
 
