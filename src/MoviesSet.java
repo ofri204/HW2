@@ -46,6 +46,11 @@ public class MoviesSet {
         return this.activeMovies == 0;
     }
 
+
+    public int getActiveMovies(){
+        return this.activeMovies;
+    }
+
     /**
      * <p><u>Purpose: Check is {@code movies} is full</u></p>
      * <p><b>Note: {@code movies} is full if it hasn't any nulls</b></p>

@@ -30,6 +30,8 @@ public class RentalSystem {
     private static final String cannotFindUnRentedMovies = "No Unrented movies";
     private static final String rentedMoviesArrMessage = "Rented Movies:";
     private static final String unRentedMoviesArrMessage = "Unrented Movies:";
+    private static final String systemIsFullMessage= " System is full, Cannot add more movies.";
+
     /**<p><u>RentalSystem Class Builder</u></p>*/
     public RentalSystem(){
         this.customers = new CustomerSet(maxCustomerNum, isCustomerSetFinal);
@@ -136,6 +138,11 @@ public class RentalSystem {
         return true;
     }
 
+
+    private boolean isMoviesFull() {
+        return movies.getActiveMovies() >= maxMovieNum;
+    }
+
     /**
      * Adds a new movie to the system. If the director does not exist, adds the director as well.
      * Prints a success message if the movie was added, or an error if the director is invalid.
@@ -151,9 +158,15 @@ public class RentalSystem {
         if (!IsDirectorValid(director)) {
             return;
         }
+
+        if (isMoviesFull()) {
+            printMessage(systemIsFullMessage);
+            return;
+        }
+
         Movie newMovie = new Movie(movieName, genre, releaseYear, director, maxCustomerNum, isCustomerSetFinal);
         movies.addNewMovie(newMovie);
-        printMessage(movieAddedToSystemMessage);
+        return;
     }
 
     /**<u>Purpose: Print a system message to the console</u>
