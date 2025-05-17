@@ -13,7 +13,7 @@ public class RentalSystem {
     private static final boolean isCustomerSetFinal = true;
     private static final boolean isDirectorSetFinal = false;
     private static final boolean isCustomerMovieSetFinal = true;
-
+    private static final int maxRentedMoviesForCustomer = 5;
 
     /** <p><u>General System Messages</u></p>*/
     private static final String customerReachedLimitMessage = "The customer has reached the limit";
@@ -21,13 +21,12 @@ public class RentalSystem {
     private static final String customerNotFoundMessage = "Customer not found.";
     private static final String customerCantReturnMessage = "Customer cannot return the movie.";
     private static final String movieInSystemMessage = "Movie is already in the system.";
-    private static final String noRentedMoviesMessage = "No Rented movies.";
     private static final String movieIsnNotExistMessage = "No such movie exists.";
     private static final String cannotRemoveMovieMessage = "Cannot remove rented movie.";
     private static final String cannotAddMovieMessage = "Cannot add movie.";
     private static final String movieAddedToSystemMessage = "Movie added to system successfully";
-    private static final String cannotFindRentedMovies = "No Rented movies";
-    private static final String cannotFindUnRentedMovies = "No Unrented movies";
+    private static final String cannotFindRentedMovies = "No Rented movies.";
+    private static final String cannotFindUnRentedMovies = "No Unrented movies.";
     private static final String rentedMoviesArrMessage = "Rented Movies:";
     private static final String unRentedMoviesArrMessage = "Unrented Movies:";
     private static final String systemIsFullMessage= " System is full, Cannot add more movies.";
@@ -54,7 +53,7 @@ public class RentalSystem {
     public void rentMovie(String customerName, String customerId, String movieName, int releaseYear,
             String directorName) {
         Customer tempCustomer = new Customer(customerName, customerId,
-                RentalSystem.maxCustomerNum, RentalSystem.isCustomerMovieSetFinal);
+                RentalSystem.maxRentedMoviesForCustomer, RentalSystem.isCustomerMovieSetFinal);
 
         Director tempDirector = new Director(
                 directorName, null, 0, false);
@@ -164,9 +163,14 @@ public class RentalSystem {
             return;
         }
 
+
         Movie newMovie = new Movie(movieName, genre, releaseYear, director, maxCustomerNum, isCustomerSetFinal);
+        if( this.isMovieExistInSystem(  newMovie ) ){
+            RentalSystem.printMessage(RentalSystem.movieInSystemMessage);
+            return;
+        }
+
         movies.addNewMovie(newMovie);
-        return;
     }
 
     /**<u>Purpose: Print a system message to the console</u>
@@ -211,7 +215,7 @@ public class RentalSystem {
 
 
     /**<u>Purpose: Check if a customer exists in the system</u>
-     * <br><b>Sub-function of: {@link #isCustomerExist(Customer)},
+     * <br><b>Sub-function of:
      * {@link #updateMovieAndCustomer(Movie, Customer)}</b>
      * @param customer The {@code customer} to check
      * @return true if exists, otherwise false
@@ -221,7 +225,7 @@ public class RentalSystem {
     }
 
     /**<u>Purpose: Check if customers array has reached its limit</u>
-     *<br> <b>Sub-function of: {@link #checkIfNewCustomerAndNoPlace(Customer)}</b>
+     *<br> <b>Sub-function of: {@link #isCustomersFull(Customer)}</b>
      * @return true if full, otherwise false
      */
     private boolean isCustomersFull(){
@@ -286,24 +290,15 @@ public class RentalSystem {
         return false;
     }
 
-    /**<u>Purpose: Wrapper for {@link #isCustomerExistInSystem(Customer)}</u>
-     * <br><b>Sub-function of: {@link #checkIfNewCustomerAndNoPlace(Customer)}</b>
-     * @param customer {@code customer} to check
-     * @return true if exists
-     */
-    private boolean isCustomerExist( Customer customer){
-        return this.isCustomerExistInSystem( customer );
-    }
-
 
     /**<u>Purpose: Check if new customer can't be added due to system limit</u>
-     * <br><b>Used functions: {@link #isCustomerExist(Customer)}, {@link #isCustomersFull()}</b>
+     * <br><b>Used functions: {@link #isCustomersFull()}</b>
      * <br><b>Sub-function of: {@link #hasRentMovieErrors(Movie, Customer)}</b>
      * @param customer The {@code customer} to check
      * @return true if new and no place, otherwise false
      */
-    private boolean checkIfNewCustomerAndNoPlace( Customer customer ){
-        if ( !isCustomerExist( customer ) && this.isCustomersFull() ) {
+    private boolean isCustomersFull( Customer customer ){
+        if ( this.isCustomersFull() ) {
             RentalSystem.printMessage((RentalSystem.customerReachedLimitMessage));
             return true;
         }
@@ -319,7 +314,7 @@ public class RentalSystem {
      * @return true if already rented
      */
     private boolean checkIfCustomerAlreadyRentedMovie( Customer customer, Movie movie){
-        if( isCustomerRentedMovie( customer, movie ) ){
+        if( this.isCustomerRentedMovie( customer, movie ) ){
             printMessage(RentalSystem.customerAlreadyRentedMessage);
             return true;
         }
@@ -327,16 +322,34 @@ public class RentalSystem {
     }
 
     /**<u>Purpose: Validate errors before renting a movie</u>
-     * <br></vr><b>Used functions: {@link #checkIfMovieNotExist(Movie)}, {@link #checkIfNewCustomerAndNoPlace(Customer)}, {@link #checkIfCustomerAlreadyRentedMovie(Customer, Movie)}</b>
+     * <br></vr><b>Used functions: {@link #checkIfMovieNotExist(Movie)}, {@link #isCustomersFull(Customer)}, {@link #checkIfCustomerAlreadyRentedMovie(Customer, Movie)}</b>
      * <br><b>Sub-function of: {@link #rentMovie(String, String, String, int, String)}</b>
      * @param movie {@code movie} object
      * @param customer {@code customer} object
      * @return true if any error occurs, otherwise false
      */
-    private boolean hasRentMovieErrors( Movie movie, Customer customer ){
-        return checkIfMovieNotExist(movie) ||
-               checkIfNewCustomerAndNoPlace( customer) ||
-               checkIfCustomerAlreadyRentedMovie( customer, movie);
+    private boolean hasRentMovieErrors( Movie movie, Customer customer ) {
+        boolean isCustomerExist = this.isCustomerExistInSystem(customer);
+        if (checkIfMovieNotExist(movie) ||
+                (!isCustomerExist && isCustomersFull(customer))) {
+            return true;
+        } else if( isCustomerExist  ){
+            Customer realCustomer = this.findCustomer( customer );
+            return (checkIfCustomerAlreadyRentedMovie(realCustomer, movie) ||
+                    isCustomerReachedLimitRentedMovies(realCustomer));
+        } else{
+            return false;
+        }
+
+    }
+
+    private boolean isCustomerReachedLimitRentedMovies( Customer customer){
+        Customer realCustomer = this.findCustomer( customer );
+        if( realCustomer.isRentedMoviesFull() ){
+            RentalSystem.printMessage(RentalSystem.customerReachedLimitMessage);
+            return true;
+        }
+        return false;
     }
 
 
@@ -372,8 +385,6 @@ public class RentalSystem {
      * Calls the method that prints rented movies and then the one that prints un rented movies.
      * If no movies match a status, prints the corresponding error message.
      *
-     * @param isRented indicates whether to print rented (true) or un rented (false) movies
-     * @param errorMessage the message to print if no movies match the status
      */
     public void printMovies(){
 
@@ -385,8 +396,8 @@ public class RentalSystem {
     }
 
     private void printMoviesSub( boolean isRented, String message, String errorMessage){
+        RentalSystem.printMessage(message);
         if( this.movies.hasRenteOrUnRented(isRented) ){
-            RentalSystem.printMessage(message);
             movies.printMoviesByIsRented(isRented);
         } else{
             RentalSystem.printMessage(errorMessage);

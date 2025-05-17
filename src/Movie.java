@@ -52,7 +52,7 @@ public class Movie {
     /** Prints the movie's details, including title, genre, release year, and director **/
     public void printMovie() {
         System.out.println("Title:" + this.name + ", Genre:" + this.genre + ", Year:" + this.releaseYear
-                + ", Director:" + this.director.getName());
+                + ", director:" + this.director.getName());
     }
 
     /**
@@ -72,7 +72,7 @@ public class Movie {
      * @return true if the movie is rented, otherwise false
      * */
     public boolean isRented(){
-        return !customersRented.isEmpty();
+        return !this.customersRented.isEmpty();
     }
 
     /**

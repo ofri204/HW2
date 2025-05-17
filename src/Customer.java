@@ -50,7 +50,7 @@ public class Customer {
      * @return true if the movie is rented by the customer, false otherwise
      */
     public boolean isMovieRented( Movie movie ){
-        return this.rentedMovies.isMovieExisting( movie);
+        return this.rentedMovies.isMovieExisting( movie );
     }
 
     /**
@@ -78,6 +78,10 @@ public class Customer {
      */
     public boolean isRentedMoviesEmpty (){
         return rentedMovies.isEmpty();
+    }
+
+    public boolean isRentedMoviesFull (){
+        return rentedMovies.isFull();
     }
 }
 

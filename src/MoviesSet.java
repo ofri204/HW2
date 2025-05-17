@@ -69,7 +69,7 @@ public class MoviesSet {
      * @return true if the movie is in {@code movies}, otherwise false
      * */
     public boolean isMovieExisting( Movie movie ){
-        return this.findMovieByDetails( movie ) == MoviesSet.movieIsNotExistingError;
+        return this.findMovieByDetails( movie ) != MoviesSet.movieIsNotExistingError;
     }
 
     /**
@@ -113,7 +113,7 @@ public class MoviesSet {
      * */
     private void movieAdder(Movie movie){
 
-        if( this.activeMovies == this.size){
+        if( this.activeMovies == this.size ){
             expandMoviesArr();
         }
         this.movies[activeMovies] = movie;
@@ -203,7 +203,6 @@ public class MoviesSet {
      * A helper method for {@code PrintMovies} at RentalSystem class
      *
      * @param isRented true to print rented movies, false to print available ones
-     * @param errorMessage the message to print if no movies match the given status
      */
     public void printMoviesByIsRented ( boolean isRented){
         for( int i = 0; i< this.activeMovies; i++){

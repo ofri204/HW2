@@ -17,7 +17,6 @@ public class Main {
         rentalSystem.addMovie("Tenet", Genre.ACTION, 2020, "Christopher Nolan", "Director of Tenet");
         rentalSystem.addMovie("Memento", Genre.DRAMA, 2000, "Christopher Nolan", "Director of Memento");
         rentalSystem.addMovie("Prestige", Genre.DRAMA, 2006, "Christopher Nolan", "Director of Prestige");
-
         // Rent 5 movies
         rentalSystem.rentMovie("John Doe", "12345", "Inception", 2010, "Christopher Nolan");
         rentalSystem.rentMovie("John Doe", "12345", "The Dark Knight", 2008, "Christopher Nolan");
