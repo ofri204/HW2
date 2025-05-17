@@ -367,25 +367,78 @@ public class RentalSystem {
         movies.printMoviesByIsRented(false , cannotFindUnRentedMovies);
     }
 
-    public void returnMovie (String id , String movieName , int releaseYear , String directorName ) {
-        Movie foundmovie= movies.findMovieByNameReleaseYearAndDirectorName (movieName, releaseYear,  directorName);
-
-        Customer foundCustomer = customers.findCustomerById( id );
-        if (foundCustomer == null) {
+    /**
+     * Retrieves a customer by ID. If the customer is not found, an error message is printed.
+     * A helper method for {@code returnMovie}
+     *
+     * @param id the ID of the customer
+     * @return the Customer object if found, otherwise returns null
+     */
+    private Customer getValidCustomerOrPrintMessage(String id) {
+        Customer customer = customers.findCustomerById(id);
+        if (customer == null) {
             printMessage(customerNotFoundMessage);
-            return;
         }
-        if (foundmovie == null || !foundCustomer.isMovieRented(foundmovie)) {
+        return customer;
+    }
+
+    /**
+     * Checks if the return operation is valid. A return is valid if the movie exists
+     * and the customer has rented the movie.
+     * If invalid, prints an appropriate error message.
+     * A helper method for {@code returnMovie}
+     *
+     * @param movie the movie to return
+     * @param customer the customer attempting to return the movie
+     * @return true if the return is valid, false otherwise
+     */
+    private boolean isValidReturn(Movie movie, Customer customer) {
+        if (movie == null || !customer.isMovieRented(movie)) {
             printMessage(customerCantReturnMessage);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Removes the movie from the customer's rented movies and removes the customer from the movie's renters.
+     * If the customer no longer has any rented movies, the customer is removed from the system.
+     *A helper method for {@code returnMovie}
+     *
+     * @param customer the customer returning the movie
+     * @param movie the movie being returned
+     */
+    private void removeMovieFromCustomerAndSystem(Customer customer, Movie movie) {
+        customer.removeMovie(movie);
+        movie.removeCustomer(customer);
+
+        if (customer.isRentedMoviesEmpty()) {
+            this.customers.removeCustomer(customer);
+        }
+    }
+
+    /**
+     * Attempts to return a movie rented by a customer based on the provided details.
+     * If the customer or movie is not found, or the movie was not rented by the customer,
+     * appropriate error messages are printed and the method exits.
+     *
+     * @param id the ID of the customer
+     * @param movieName the name of the movie to be returned
+     * @param releaseYear the release year of the movie
+     * @param directorName the name of the director of the movie
+     */
+    public void returnMovie (String id , String movieName , int releaseYear , String directorName ) {
+        Movie foundMovie= movies.findMovieByNameReleaseYearAndDirectorName (movieName, releaseYear,  directorName);
+
+        Customer foundCustomer = getValidCustomerOrPrintMessage(id);
+        if (foundCustomer == null) {
+            return;
+        }
+        if (!isValidReturn(foundMovie, foundCustomer)) {
             return;
         }
 
-        foundCustomer.removeMovie( foundmovie );
-        foundmovie.removeCustomer(foundCustomer);
-
-        if (foundCustomer.isRentedMoviesEmpty()) {
-            this.customers.removeCustomer(foundCustomer);
-        }
+        removeMovieFromCustomerAndSystem(foundCustomer, foundMovie);
     }
 
 }

@@ -51,10 +51,20 @@ public class Customer {
         this.rentedMovies.addNewMovie( movie );
     }
 
+    /**
+     * Removes the specified movie from the customer's list of rented movies.
+     *
+     * @param movie the movie to be removed from the rented movies
+     */
     public void removeMovie( Movie movie ){
         this.rentedMovies.removeMovie( movie);
     }
 
+    /**
+     * Checks whether the customer has any rented movies.
+     *
+     * @return true if the customer has no rented movies, false otherwise
+     */
     public boolean isRentedMoviesEmpty (){
         return rentedMovies.isEmpty();
     }

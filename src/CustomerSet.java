@@ -175,6 +175,12 @@ public class CustomerSet {
         return customers[index].isMovieRented( movie );
     }
 
+    /**
+     * Searches for a customer in the system by their ID.
+     *
+     * @param Id the ID of the customer to find
+     * @return the Customer object if found; null if no customer with the given ID exists
+     */
     public Customer findCustomerById( String Id){
         for (int i=0; i<activeCustomers; i++){
             if( customers[i].getId().equals( Id ) ){

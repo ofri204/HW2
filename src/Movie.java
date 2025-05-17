@@ -79,6 +79,11 @@ public class Movie {
         this.customersRented.addNewCustomer( customer );
     }
 
+    /**
+     * Removes the specified customer from the list of customers who rented the movie.
+     *
+     * @param customer the customer to remove
+     */
     public void removeCustomer(Customer customer){
         this.customersRented.removeCustomer( customer );
     }

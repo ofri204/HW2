@@ -209,6 +209,14 @@ public class MoviesSet {
 
     }
 
+    /**
+     * Searches for a movie in the system by its name, release year, and director's name.
+     *
+     * @param movieName the name of the movie to find
+     * @param releaseYear the release year of the movie
+     * @param directorName the name of the movie's director
+     * @return the Movie object if found; null if no matching movie exists
+     */
     public Movie findMovieByNameReleaseYearAndDirectorName( String movieName , int releaseYear , String directorName){
         for( int i = 0; i < this.activeMovies; i++){
             if( this.movies[i].getName().equals(movieName) && this.movies[i].getReleaseYear() == releaseYear &&
