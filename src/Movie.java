@@ -51,8 +51,8 @@ public class Movie {
 
     /** Prints the movie's details, including title, genre, release year, and director **/
     public void printMovie() {
-        System.out.println("Title:" + this.name + ", Genre:" + this.genre + ", Year:" + this.releaseYear
-                + ", director:" + this.director.getName());
+        System.out.println("Title: " + this.name + ", Genre: " + this.genre + ", Year: " + this.releaseYear
+                + ", director: " + this.director.getName());
     }
 
     /**

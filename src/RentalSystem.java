@@ -27,8 +27,8 @@ public class RentalSystem {
     private static final String movieAddedToSystemMessage = "Movie added to system successfully";
     private static final String cannotFindRentedMovies = "No Rented movies.";
     private static final String cannotFindUnRentedMovies = "No Unrented movies.";
-    private static final String rentedMoviesArrMessage = "Rented Movies:";
-    private static final String unRentedMoviesArrMessage = "Unrented Movies:";
+    private static final String rentedMoviesArrMessage = "Rented Movies: ";
+    private static final String unRentedMoviesArrMessage = "Unrented Movies: ";
     private static final String systemIsFullMessage= " System is full, Cannot add more movies.";
 
     /**<p><u>RentalSystem Class Builder</u></p>*/

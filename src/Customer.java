@@ -40,7 +40,7 @@ public class Customer {
      * @param customer a customer
      * @return true if the customer are identical, otherwise false*/
     public boolean isEquals( Customer customer ){
-        return this.id.equals(customer.getId()) && this.name.equals(customer.getName()) ;
+        return this.id.equals(customer.getId());
     }
 
     /**

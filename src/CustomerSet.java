@@ -133,7 +133,7 @@ public class CustomerSet {
      * @return <p>index of the searched customer in {@code customers} if it is existing in
      * {@code customers},</p> <p>otherwise -1</p>
      * */
-    public int findCustomerByDetails( Customer customer){
+    public int findCustomerByDetails( Customer customer ){
         int found = customerIsNotExistingError;
         for( int i = 0; i < this.activeCustomers; i++){
             if( this.customers[i].isEquals( customer) ){
@@ -183,11 +183,11 @@ public class CustomerSet {
      * @param Id the ID of the customer to find
      * @return the Customer object if found; null if no customer with the given ID exists
      */
-    public Customer findCustomerById( String Id){
-        for (int i=0; i<activeCustomers; i++){
-            if( customers[i].getId().equals( Id ) ){
-                return customers[i];
-            }
+    public Customer findCustomerById( String id){
+        Customer newCustomer = new Customer(null, id, 0, false );
+        int index = findCustomerByDetails( newCustomer );
+        if( index != CustomerSet.customerIsNotExistingError){
+            return this.customers[index];
         }
         return null;
     }
