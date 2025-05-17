@@ -200,7 +200,7 @@ public class MoviesSet {
      * @param isRented true to print rented movies, false to print available ones
      * @param errorMessage the message to print if no movies match the given status
      */
-    public void printMoviesByIsRented ( boolean isRented, String errorMessage){
+    public void printMoviesByIsRented ( boolean isRented){
         for( int i = 0; i< this.activeMovies; i++){
             if (ShouldPrintMovie(movies[i] , isRented)) {
                 movies[i].printMovie();
