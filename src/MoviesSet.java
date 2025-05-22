@@ -168,13 +168,10 @@ public class MoviesSet {
     private void movieRemover( Movie movie ){
         int removeIndex = findMovieByDetails( movie );
         this.movies[ removeIndex ] = null;
-
-        for( int i = removeIndex; i < this.activeMovies - 1; i++){
-            this.movies[i] = this.movies[i+1];
-        }
-
+        this.movies[ removeIndex ] = this.movies[ this.activeMovies - 1 ];
         this.movies[ this.activeMovies - 1 ] = null;
         this.activeMovies--;
+
     }
 
     /**

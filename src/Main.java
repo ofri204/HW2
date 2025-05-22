@@ -4,8 +4,8 @@ public class Main {
         //test1_MaxRentals();
         //test2_ReturnNonExistent();
         //test3_DuplicateAdd();
-        //test4_RemoveRentedOrNonExistent();
-        text_6MaxClients();
+        test4_RemoveRentedOrNonExistent();
+       // text_6MaxClients();
     }
 
     public static void text_6MaxClients(){
