@@ -1,11 +1,11 @@
-public class Movie {
+public class Movie implements IsEquableSpecially{
 
     /**Properties of Movie*/
-    private String name;
-    private Genre genre;
-    private int releaseYear;
-    private Director director;
-    private CustomerSet customersRented;
+    private final String name;
+    private final Genre genre;
+    private final int releaseYear;
+    private final Director director;
+    private final Utility customersRented;
 
     /**
      * Constructor for the Movie class.
@@ -18,17 +18,17 @@ public class Movie {
      * @param director the director of the movie
      */
     public Movie(String name, Genre genre, int releaseYear, Director director,
-                 int defaultCustomerSize, boolean isCustomersRentedLimited) {
+                 int customerAmount) {
         this.name = name;
         this.genre = genre;
         this.releaseYear = releaseYear;
         this.director = director;
-        this.customersRented = new CustomerSet(defaultCustomerSize, isCustomersRentedLimited);
+        this.customersRented = new Utility(customerAmount, Customer.class );
     }
+
 
     /**
      * Returns the release year of the movie.
-     *
      * @return the year the movie was released
      */
     public int getReleaseYear() {
@@ -65,17 +65,31 @@ public class Movie {
      * @param movie a movie to compare
      * @return true if the movies are the same, otherwise false
      * */
-    public boolean isEquals( Movie movie){
-        return this.name.equals( movie.getName() ) && this.releaseYear == movie.getReleaseYear() &&
-                this.director.isEquals(movie.getDirector() );
+    public boolean isEquals( Object movie) {
+        if( this.isObjKindOf( movie )  ) {
+            Movie temp = (Movie) movie;
+            return this.name.equals(temp.getName()) && this.releaseYear == temp.getReleaseYear() &&
+                    this.director.isEquals(temp.getDirector());
+        }
+        return false;
+    }
+
+
+    /**
+     * Checks if an object is Movie
+     * @param obj object which can be a movie
+     * @return true if the object is a movie, false otherwise
+     * */
+    public final boolean isObjKindOf( Object obj ){
+        return Utility.isClassesIdentical( obj.getClass(), this.getClass());
     }
 
     /**
-     * <p>Checks if the movie is rented</p>
+     * Checks if the movie is rented
      * @return true if the movie is rented, otherwise false
      * */
     public boolean isRented(){
-        return !this.customersRented.isEmpty();
+        return !this.customersRented.isArrEmpty();
     }
 
     /**
@@ -84,7 +98,7 @@ public class Movie {
      * @param customer the customer to add
      */
     public void addCustomer(Customer customer){
-        this.customersRented.addNewCustomer( customer );
+        this.customersRented.addItem( customer );
     }
 
     /**
@@ -92,9 +106,7 @@ public class Movie {
      *
      * @param customer the customer to remove
      */
-    public void removeCustomer(Customer customer){
-        this.customersRented.removeCustomer( customer );
-    }
+    public void removeCustomer(Customer customer){ this.customersRented.removeItem( customer ); }
 
 }
 

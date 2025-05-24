@@ -1,10 +1,10 @@
 /** Represents a customer with a name and an ID. */
-public class Customer {
+public class Customer implements IsEquableSpecially {
 
     /**Customer properties*/
-    private String name;
-    private String id;
-    private MoviesSet rentedMovies;
+    private final String name;
+    private final String id;
+    private final Utility rentedMovies;
 
     /**
      * Constructs a new Costumer with the specified name and ID.
@@ -12,10 +12,10 @@ public class Customer {
      * @param name the name of the customer
      * @param id the ID of the customer
      */
-    public Customer(String name, String id, int initialMoviesSize, boolean isNumRentMoviesLimited){
+    public Customer(String name, String id, int moviesLength){
         this.name = name;
         this.id = id;
-        this.rentedMovies = new MoviesSet(initialMoviesSize, isNumRentMoviesLimited);
+        this.rentedMovies = new Utility(moviesLength, Movie.class );
     }
 
     /**
@@ -38,11 +38,21 @@ public class Customer {
 
     /**
      * <p><u>Purpose: Checks if a customer is identical to this customer</u></p>
-     * @param customer a customer
+     * @param customer an object which can be a customer
      * @return true if the customer are identical, otherwise false*/
-    public boolean isEquals( Customer customer ){
-        return this.id.equals(customer.getId());
+    public boolean isEquals( Object customer ){
+        return this.isObjKindOf( customer ) && this.id.equals( ( (Customer)customer ).getId() );
     }
+
+
+    /**
+     * Checks if an object is Customer
+     * @param obj object which can be a customer
+     * @return true if the object is a customer, false otherwise
+     * */
+    public boolean isObjKindOf( Object obj ){
+        return Utility.isClassesIdentical(obj.getClass(), this.getClass() ); }
+
 
     /**
      * Checks if the specified movie is currently rented by the customer.
@@ -51,34 +61,31 @@ public class Customer {
      * @return true if the movie is rented by the customer, false otherwise
      */
     public boolean isMovieRented( Movie movie ){
-        return this.rentedMovies.isMovieExisting( movie );
+        return this.rentedMovies.isItemExist( movie );
     }
 
     /**
      * Adds a movie to the customer's rented movies collection.
-     *
      * @param movie the movie to be added to the rented movies
      */
     public void addMovie( Movie movie ){
-        this.rentedMovies.addNewMovie( movie );
+        this.rentedMovies.addItem( movie );
     }
 
     /**
      * Removes the specified movie from the customer's list of rented movies.
-     *
      * @param movie the movie to be removed from the rented movies
      */
     public void removeMovie( Movie movie ){
-        this.rentedMovies.removeMovie( movie);
+        this.rentedMovies.removeItem( movie );
     }
 
     /**
      * Checks whether the customer has any rented movies.
-     *
      * @return true if the customer has no rented movies, false otherwise
      */
-    public boolean isRentedMoviesEmpty (){
-        return rentedMovies.isEmpty();
+    public boolean isCustomerRentedMovies(){
+        return !rentedMovies.isArrEmpty();
     }
 
 
@@ -86,8 +93,8 @@ public class Customer {
      * Checks if the customer rented maximum number of movies
      * @return true if the customer rented maximum, false otherwise
      * */
-    public boolean isRentedMoviesFull (){
-        return rentedMovies.isFull();
+    public boolean isCustomerRentedMaxMovies(){
+        return !rentedMovies.isArrNotFull();
     }
 }
 
