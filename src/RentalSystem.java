@@ -49,9 +49,10 @@ public class RentalSystem {
         Customer tempCustomer = new Customer(customerName, customerId,
                 RentalSystem.MAX_RENT_MOVIE_FOR_CUSTOMER);
 
-        Director tempDirector = new Director(directorName, null, 0);
+        Director tempDirector = new Director(directorName, null, RentalSystem.MAX_MOVIE_NUM);
 
-        Movie tempMovie = new Movie(movieName, null, releaseYear, tempDirector, 0);
+        Movie tempMovie = new Movie(movieName, null, releaseYear, tempDirector,
+                RentalSystem.MAX_CUSTOMER_NUM);
 
         //check for errors
         if ( hasRentMovieInputErrors( tempMovie, tempCustomer) ) {
@@ -177,8 +178,9 @@ public class RentalSystem {
      */
     public void removeMovie(String movieName, int releaseYear, String directorName){
 
-        Director tempDirector = new Director( directorName, null, 0 );
-        Movie tempMovie = new Movie( movieName, null ,releaseYear, tempDirector, 0);
+        Director tempDirector = new Director( directorName, null, RentalSystem.MAX_MOVIE_NUM );
+        Movie tempMovie = new Movie( movieName, null ,releaseYear, tempDirector,
+                RentalSystem.MAX_CUSTOMER_NUM);
 
         //check errors
         if( this.hasRemoveMovieErrors( tempMovie ) ){ return; }
@@ -269,7 +271,7 @@ public class RentalSystem {
             return;
         }
 
-        Director tempDirector = new Director(directorName, biography, 0);
+        Director tempDirector = new Director(directorName, biography, RentalSystem.MAX_MOVIE_NUM);
         Movie tempNewMovie = new Movie(movieName, genre, releaseYear,
                 tempDirector, MAX_CUSTOMER_NUM);
 
@@ -448,6 +450,9 @@ public class RentalSystem {
         }
     }
 
+    /**<p><u>Checks if system has un/rented movies</u></p>
+     * @param isRented check un/rented movies
+     * @return true if it has un/rented, false otherwise*/
     private boolean hasRentedOrUnRented( boolean isRented){
         int i = 0;
         Movie temp = (Movie)this.movies.returnItemByIndex(i);
@@ -462,7 +467,8 @@ public class RentalSystem {
     }
 
     /**
-     * <p><u> Prints all un/rented movies in system</u></p>*/
+     * <p><u> Prints all un/rented movies in system</u></p>
+     * @param isRented print un/rented movies*/
     private void printMoviesByIsRented( boolean isRented ) {
         int i = 0;
         Object temp = this.movies.returnItemByIndex(i);
@@ -489,10 +495,12 @@ public class RentalSystem {
      */
     public void returnMovie (String id , String movieName , int releaseYear , String directorName ) {
 
-        Director tempDir  = new Director( directorName, null, 0);
-        Movie tempMovie = new Movie( movieName, null ,releaseYear , tempDir, 0);
+        Director tempDir  = new Director( directorName, null, RentalSystem.MAX_MOVIE_NUM);
+        Movie tempMovie = new Movie( movieName, null ,releaseYear , tempDir,
+                RentalSystem.MAX_CUSTOMER_NUM);
         Object foundMovie = movies.findItemAndReturnReference(tempMovie);
-        Object foundCustomer =  customers.findItemAndReturnReference( new Customer(null, id, 0) );
+        Object foundCustomer =  customers.findItemAndReturnReference( new Customer(null, id,
+                RentalSystem.MAX_RENT_MOVIE_FOR_CUSTOMER) );
 
         if (foundCustomer == null || foundMovie == null ) {
             if( foundCustomer == null){
