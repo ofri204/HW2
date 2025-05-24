@@ -1,4 +1,4 @@
-public class Movie implements IsEquableSpecially{
+public class Movie{
 
     /**Properties of Movie*/
     private final String name;
@@ -65,11 +65,12 @@ public class Movie implements IsEquableSpecially{
      * @param movie a movie to compare
      * @return true if the movies are the same, otherwise false
      * */
-    public boolean isEquals( Object movie) {
+    @Override
+    public boolean equals(Object movie) {
         if( this.isObjKindOf( movie )  ) {
             Movie temp = (Movie) movie;
             return this.name.equals(temp.getName()) && this.releaseYear == temp.getReleaseYear() &&
-                    this.director.isEquals(temp.getDirector());
+                    this.director.equals(temp.getDirector());
         }
         return false;
     }

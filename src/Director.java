@@ -1,4 +1,4 @@
-public class Director implements IsEquableSpecially {
+public class Director {
 
     /** Director Properties*/
     private final String name ;
@@ -25,7 +25,8 @@ public class Director implements IsEquableSpecially {
      * <p><b>Note: 2 directors are identical if they have the same name</b></p>
      * @param director a director
      * @return true if the directors are identical, otherwise false*/
-    public boolean isEquals( Object director ){
+    @Override
+    public boolean equals( Object director ){
         return this.isObjKindOf(director) && this.name.equals( ((Director)director).getName());
     }
 

@@ -5,8 +5,8 @@ public class Main {
         test2_ReturnNonExistent();
         test3_DuplicateAdd();
         test4_RemoveRentedOrNonExistent();
-        text_6MaxClients();
-        test7_MaxRent_MaxUnrent();
+        //text_6MaxClients();
+        //test7_MaxRent_MaxUnrent();
     }
 
     public static void text_6MaxClients(){

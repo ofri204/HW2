@@ -1,5 +1,5 @@
 /** Represents a customer with a name and an ID. */
-public class Customer implements IsEquableSpecially {
+public class Customer{
 
     /**Customer properties*/
     private final String name;
@@ -40,7 +40,8 @@ public class Customer implements IsEquableSpecially {
      * <p><u>Purpose: Checks if a customer is identical to this customer</u></p>
      * @param customer an object which can be a customer
      * @return true if the customer are identical, otherwise false*/
-    public boolean isEquals( Object customer ){
+    @Override
+    public boolean equals( Object customer ){
         return this.isObjKindOf( customer ) && this.id.equals( ( (Customer)customer ).getId() );
     }
 
